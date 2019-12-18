@@ -4,6 +4,13 @@ public enum PetType {
     CAT,
     DOG,
     RAT,
+    GUINEA_PIG,
     PARROT,
-    RABBIT
+    RABBIT,
+    FISH,
+    HAMSTER,
+    LIZARD,
+    SNAKE,
+    TURTLE_TORTOISE,
+    OTHER,
 }

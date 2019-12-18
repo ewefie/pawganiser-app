@@ -1,6 +1,6 @@
 package com.paw.pawganizr.model;
 
-public enum Sex {
+public enum PetGender {
     FEMALE,
     MALE,
     OTHER

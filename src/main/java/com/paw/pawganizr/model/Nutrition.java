@@ -1,6 +1,5 @@
 package com.paw.pawganizr.model;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -8,23 +7,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import java.time.LocalDate;
 
 @Entity
 @Data
-@AllArgsConstructor
+//@AllArgsConstructor
 @NoArgsConstructor
-public class Medicine {
+public class Nutrition {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // identyfikator jest generowany przez bazę
     private Long id;
-    private String name;
-    private MedicineType type;
-    private String dosage;
-    private MedicineImportancy importancy;
-    /**
-     * optional
-     */
-    private LocalDate treatmentStartDate;
-    private LocalDate treatmentEndDate;
+
+//    todo:
+//    TYPE OF FOOD -enum,
+//    string - DESCRIPTION TO ADD for ex. favourite food brand
 }

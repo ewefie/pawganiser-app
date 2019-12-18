@@ -4,9 +4,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.Set;
 
 @Entity
@@ -18,52 +20,35 @@ public abstract class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // identyfikator jest generowany przez bazę
     private Long id;
 
-    private String name;
+    @CreatedDate
+    private Date createdAt;
+    /**
+     * some of details will be mandatory:
+     */
+    private String petName;
 
-    private LocalDate birthDate;
-    private LocalDate deathDate;
-
-    private CoatColor color;
-    private CoatPattern pattern;
-    private CoatLength length;
-    private EyeColor eyeColor;
-    private Sex sex;
-
-    //fixme: find better words ;)
-    private boolean alive;
-
-    //todo: will be changed to several classes extending pet class
+    //todo: probably will be changed to several classes extending pet class
     @Enumerated(value = EnumType.STRING)
     private PetType type;
 
-    //todo: change to enum
-    private String breed;
 
-    //fixme: what's the general name of place where people breed pets?
-    private String cattery;
+    //todo: not sure if it correct
+    //private Set<Long> ownersIds;
+    @ManyToMany(mappedBy = "pets")
+    private Set<AppUser> owners;
 
+    /**
+     * ******************************* *
+     * rest of details will be optional
+     */
+    private PetGender gender;
+    private Long chip; //chip number
+    private String petAvatarUrl;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<MedicalService> medicalServices;
-
-
-    //Not sure if adding family as pets is a proper way...
-    @ToString.Exclude
-    @ManyToOne
-    private Pet mother;
-
-    @ToString.Exclude
-    @ManyToOne
-    private Pet father;
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Pet> children;
-
-    @ToString.Exclude
-    @ManyToOne
-    private AppUser owner;
+    private CoatColor color;
+    private CoatPattern pattern;
+    private CoatLength coatLength;
+    private EyeColor eyeColor;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -71,5 +56,31 @@ public abstract class Pet {
 
     @ToString.Exclude
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Food> food;
+    private Set<MedicalService> medicalServices;
+
+    @ToString.Exclude
+    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private Set<Nutrition> nutrition;
+
+    private LocalDate birthDate;
+    /**
+     * only after checking "pet is dead" option, input for death date should be shown
+     */
+    private boolean dead;
+    private LocalDate deathDate;
+
+    /**
+     * *************************************************************************************************************** *
+     * additional details only for pets having pedigree, inputs will be shown only after checking "have pedigree" option.
+     */
+    private Boolean pedigree;
+    private String pedigreeNum;
+
+    private String breeder;
+
+    //todo: change to enum?
+    private String breed;
+
+    private String motherName;
+    private String fatherName;
 }
