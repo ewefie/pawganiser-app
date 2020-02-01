@@ -5,12 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "nutrition_details")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -24,9 +25,20 @@ public class Nutrition {
     )
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
-    private String foodName;
+
     @NotNull
+    @Length(min = 2)
+    @Column(name = "food_name")
+    private String foodName;
+
+    @Column(name = "brand")
     private String brand;
 
+    @Column(name = "description")
     private String description;
+
+
+    @ManyToOne
+    @JoinColumn(name = "pet_id")
+    private Pet pet;
 }

@@ -1,5 +1,5 @@
 package com.paw.pawganizr.model;
-
+//nieużywana
 public enum CoatPattern {
     SOLID,
     TABBY,

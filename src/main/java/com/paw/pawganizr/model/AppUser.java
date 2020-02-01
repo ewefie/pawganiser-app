@@ -5,14 +5,18 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
+@Entity(name = "app_users")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -27,25 +31,34 @@ public class AppUser {
     private UUID id;
 
     @CreatedDate
+    @Column(name = "created_at")
     private Date createdAt;
 
     /**
      * mandatory for creating new account:
      */
+    @NotNull
+    @Length(min = 2)
+    @Column(name = "first_name")
     private String firstName;
+
+    @NotNull
+    @Length(min = 2)
+    @Column(name = "last_name")
     private String lastName;
+
+    @NotNull
+    @Column(name = "email")
+    @Email(message = "Invalid email")
     private String email;
 
     /**
-     * optional
+     * optional fields
      */
-    //todo: two ways: vet can be a new class with some fields like name, address,
-    // phone number etc, or it can be a some kind of object from google maps API.
     @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Set<Contact> contacts;
-//    private OwnerStatus status;
+    private List<Contact> contacts;
 
-    @EqualsAndHashCode.Exclude
+
     @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
-    private Set<Pet> pets;
+    private List<Pet> pets;
 }

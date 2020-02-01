@@ -51,7 +51,7 @@ public class Contact {
     @NotNull
     private String phoneNumber;
 
-    @Column(name = "address")
+    @Column(name = "email")
     @Email(message = "Invalid email")
     private String email;
 }

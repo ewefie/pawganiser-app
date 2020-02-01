@@ -1,5 +1,6 @@
 package com.paw.pawganizr.model;
 
+//nieuzywana
 public enum EyeColor {
     GREEN,
     BLUE,

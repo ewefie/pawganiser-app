@@ -1,19 +1,26 @@
 package com.paw.pawganizr.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 import java.util.UUID;
 
-@Entity
+import static java.util.Objects.isNull;
+
+@Entity(name = "pets")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -28,73 +35,97 @@ public abstract class Pet {
     private UUID id;
 
     @CreatedDate
+    @Column(name = "created_at")
     private Date createdAt;
     /**
      * some of details will be mandatory:
      */
+    @Column(name = "pet_name")
+    @Length(min = 2)
+    @NotNull
     private String petName;
 
-    //todo: probably will be changed to several classes extending pet class
-    @Enumerated(value = EnumType.STRING)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "type")
+    @NotNull
     private PetType type;
 
-
-    //todo: not sure if it correct
-    //private Set<Long> ownersIds;
-//    @ManyToMany(mappedBy = "pets")
-//    private Set<AppUser> owners;
     @ManyToOne
+    @Column(name = "owner_id")
     private AppUser owner;
 
     /**
-     * ******************************* *
+     * *******************************
      * rest of details will be optional
      */
+    @Column(name = "gender")
+    @Enumerated(EnumType.STRING)
     private PetGender gender;
 
+    @Column(name = "chip_number")
+    @Length(min = 15, max = 15, message = "Chip number is incorrect")
     private String chipNumber; //chip number
 
-    //nullable
+    @Column(name = "avatar_url")
     private String petAvatarUrl;
 
+    @Column(name = "coat_color")
+    @Enumerated(EnumType.STRING)
     private CoatColor color;
 
-//    private CoatPattern pattern;
+    @JsonIgnore
+    @OneToMany(mappedBy = "pet")
+//    @Column(name = "medicines")
+    private List<Medicine> medicines;
 
-//    private CoatLength coatLength;
-//    private EyeColor eyeColor;
+    @JsonIgnore
+    @OneToMany(mappedBy = "pet")
+//    @Column(name = "medical_services")
+    private List<MedicalService> medicalServices;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Medicine> medicines;
+    @JsonIgnore
+    @OneToMany(mappedBy = "pet")
+//    @Column(name = "nutrition_details")
+    private List<Nutrition> nutrition;
 
-    @ToString.Exclude
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<MedicalService> medicalServices;
-
-    @ToString.Exclude
-    @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private Set<Nutrition> nutrition;
-
+    @Column(name = "birth_name")
+    @NotNull
     private LocalDate birthDate;
     /**
      * only after checking "pet is dead" option, input for death date should be shown
      */
+    @Column(name = "dead")
+    @NotNull
     private boolean dead;
+
+    @Column(name = "death_date")
     private LocalDate deathDate;
 
     /**
      * *************************************************************************************************************** *
      * additional details only for pets having pedigree, inputs will be shown only after checking "have pedigree" option.
      */
+    @Column(name = "pedigree")
     private Boolean pedigree;
+
+    @Column(name = "pedigree_number")
     private String pedigreeNum;
 
+    @Column(name = "breeder")
     private String breeder;
 
     @Column(name = "race")
     private String breed;
 
+    @Column(name = "mother_name")
     private String motherName;
+
+    @Column(name = "father_name")
     private String fatherName;
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isDeathDateValid() {
+        return (!dead && isNull(deathDate)) || deathDate.isAfter(birthDate);
+    }
 }

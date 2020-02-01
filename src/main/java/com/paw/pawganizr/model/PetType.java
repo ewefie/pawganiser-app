@@ -1,18 +1,20 @@
 package com.paw.pawganizr.model;
 
-public enum PetType {
-    CAT,
-    DOG,
-//    RAT,
-//    GUINEA_PIG,
-//    PARROT,
-    RABBIT,
-//    FISH,
-//    HAMSTER,
-//    LIZARD,
-//    SNAKE,
-    TURTLE_TORTOISE,
-    OTHER,
+import lombok.AllArgsConstructor;
 
-    //dodac stringowe values po polsku
+@AllArgsConstructor
+public enum PetType {
+    CAT("cat"),
+    DOG("dog"),
+    //    RAT,
+    //    GUINEA_PIG,
+    //    PARROT,
+    RABBIT("królik"),
+    //    FISH,
+    //    HAMSTER,
+    //    LIZARD,
+    //    SNAKE,
+    TURTLE_TORTOISE("żółw"),
+    OTHER("inny");
+    private String value;
 }
