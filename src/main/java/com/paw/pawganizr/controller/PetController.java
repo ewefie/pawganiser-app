@@ -1,11 +1,9 @@
 package com.paw.pawganizr.controller;
 
-import lombok.AllArgsConstructor;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-@AllArgsConstructor
+@RestController
 @RequestMapping("/pet/")
 public class PetController {
 }

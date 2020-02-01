@@ -3,12 +3,11 @@ package com.paw.pawganizr.model;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -16,15 +15,21 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Medicine {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // identyfikator jest generowany przez bazę
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
+
     private String name;
-    private MedicineType type;
+//    private MedicineType type;
     private String dosage;
     private MedicineImportancy importancy;
     /**
      * optional
      */
-    private LocalDate treatmentStartDate;
-    private LocalDate treatmentEndDate;
+//    private LocalDate treatmentStartDate;
+//    private LocalDate treatmentEndDate;
 }

@@ -1,9 +1,8 @@
 package com.paw.pawganizr.controller;
 
+import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.model.AppUser;
 import com.paw.pawganizr.service.UserService;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,12 +13,14 @@ import java.util.Map;
 
 @RestController
 //@CrossOrigin(origins = "adres na którym będzie zdeployowany angular")
-@AllArgsConstructor
 @RequestMapping("/api/user")
 public class UserController {
 
-    @Autowired
     private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
 
     @GetMapping("/")
     public List<AppUser> getAllUSers() {
@@ -49,7 +50,7 @@ public class UserController {
         appUser.setEmail(userDetails.getEmail());
         appUser.setFirstName(userDetails.getFirstName());
         appUser.setLastName(userDetails.getLastName());
-        appUser.setFavouriteVet(userDetails.getFavouriteVet());
+//        appUser.setFavouriteVet(userDetails.getFavouriteVet());
 
 //        rather not this way
 //        appUser.setPets(userDetails.getPets());

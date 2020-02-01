@@ -1,22 +1,57 @@
 package com.paw.pawganizr.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import java.util.UUID;
 
-@Entity
+@Entity(name = "contacts")
 @Data
-//@AllArgsConstructor
+@AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class Contact {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // identyfikator jest generowany przez bazę
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "contact_id", updatable = false, nullable = false)
+    private UUID id;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
     private ContactType type;
+
+    @Column(name = "description")
     private String description;
+
+    @Column(name = "contact_name")
+    @NotNull
+    @Length(min = 2)
+    private String name;
+
+    @JoinColumn(name = "user_id")
+    @ManyToOne
+    private AppUser user;
+
+    @Column(name = "phone_number")
+    @Pattern(regexp = "[\\d]{9}")
+    @NotNull
+    private String phoneNumber;
+
+    @Column(name = "address")
+    @Email(message = "Invalid email")
+    private String email;
 }

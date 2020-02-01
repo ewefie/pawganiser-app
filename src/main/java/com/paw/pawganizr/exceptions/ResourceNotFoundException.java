@@ -1,4 +1,4 @@
-package com.paw.pawganizr.controller;
+package com.paw.pawganizr.exceptions;
 
 import java.io.IOException;
 

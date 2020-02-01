@@ -2,18 +2,20 @@ package com.paw.pawganizr.service;
 
 import com.paw.pawganizr.model.AppUser;
 import com.paw.pawganizr.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@Transactional
 public class UserService {
-    @Autowired
     private final UserRepository userRepository;
+
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public AppUser save(final AppUser user) {
         userRepository.save(user);

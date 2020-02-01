@@ -1,12 +1,10 @@
 package com.paw.pawganizr;
 
 import com.paw.pawganizr.model.AppUser;
-import javafx.application.Application;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.web.server.LocalServerPort;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,7 @@ import java.util.Date;
 import java.util.HashSet;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+//@SpringBootTest(classes = Application.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class PawganizrApplicationTests {
 
     @Autowired

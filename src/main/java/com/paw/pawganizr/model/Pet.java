@@ -4,12 +4,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -17,8 +19,13 @@ import java.util.Set;
 @NoArgsConstructor
 public abstract class Pet {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // identyfikator jest generowany przez bazę
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @CreatedDate
     private Date createdAt;
@@ -34,21 +41,28 @@ public abstract class Pet {
 
     //todo: not sure if it correct
     //private Set<Long> ownersIds;
-    @ManyToMany(mappedBy = "pets")
-    private Set<AppUser> owners;
+//    @ManyToMany(mappedBy = "pets")
+//    private Set<AppUser> owners;
+    @ManyToOne
+    private AppUser owner;
 
     /**
      * ******************************* *
      * rest of details will be optional
      */
     private PetGender gender;
-    private Long chip; //chip number
+
+    private String chipNumber; //chip number
+
+    //nullable
     private String petAvatarUrl;
 
     private CoatColor color;
-    private CoatPattern pattern;
-    private CoatLength coatLength;
-    private EyeColor eyeColor;
+
+//    private CoatPattern pattern;
+
+//    private CoatLength coatLength;
+//    private EyeColor eyeColor;
 
     @ToString.Exclude
     @OneToMany(mappedBy = "pet", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
@@ -78,7 +92,7 @@ public abstract class Pet {
 
     private String breeder;
 
-    //todo: change to enum?
+    @Column(name = "race")
     private String breed;
 
     private String motherName;

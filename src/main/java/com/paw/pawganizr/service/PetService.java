@@ -4,25 +4,27 @@ import com.paw.pawganizr.model.AppUser;
 import com.paw.pawganizr.model.Pet;
 import com.paw.pawganizr.repository.PetRepository;
 import com.paw.pawganizr.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
-@AllArgsConstructor
+@Transactional
 public class PetService {
-    @Autowired
     private final UserRepository userRepository;
-    @Autowired
     private final PetRepository petRepository;
+
+    public PetService(UserRepository userRepository, PetRepository petRepository) {
+        this.userRepository = userRepository;
+        this.petRepository = petRepository;
+    }
 
     public void save(final Pet pet, final Long userId) {
         final Optional<AppUser> optionalPetUser = userRepository.findById(userId);
         if (optionalPetUser.isPresent()) {
-            pet.setOwner(optionalPetUser.get());
+//            pet.setOwner(optionalPetUser.get());
             petRepository.save(pet);
         }
     }

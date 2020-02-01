@@ -4,11 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+import java.util.UUID;
 
 @Entity
 @Data
@@ -16,8 +18,13 @@ import java.util.Set;
 @NoArgsConstructor
 public class AppUser {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // identyfikator jest generowany przez bazę
-    private Long id;
+    @GeneratedValue(generator = "UUID")
+    @GenericGenerator(
+            name = "UUID",
+            strategy = "org.hibernate.id.UUIDGenerator"
+    )
+    @Column(name = "id", updatable = false, nullable = false)
+    private UUID id;
 
     @CreatedDate
     private Date createdAt;
@@ -34,12 +41,11 @@ public class AppUser {
      */
     //todo: two ways: vet can be a new class with some fields like name, address,
     // phone number etc, or it can be a some kind of object from google maps API.
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<Contact> contacts;
 //    private OwnerStatus status;
 
     @EqualsAndHashCode.Exclude
-    @ManyToMany(mappedBy = "owners", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
     private Set<Pet> pets;
-
 }
