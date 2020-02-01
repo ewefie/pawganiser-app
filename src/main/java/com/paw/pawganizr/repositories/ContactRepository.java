@@ -1,6 +1,6 @@
-package com.paw.pawganizr.repository;
+package com.paw.pawganizr.repositories;
 
-import com.paw.pawganizr.model.Contact;
+import com.paw.pawganizr.models.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

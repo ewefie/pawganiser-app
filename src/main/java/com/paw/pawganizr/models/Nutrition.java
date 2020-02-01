@@ -1,4 +1,4 @@
-package com.paw.pawganizr.model;
+package com.paw.pawganizr.models;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,14 +8,14 @@ import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.time.LocalDate;
 import java.util.UUID;
 
-@Entity(name = "medicines")
+@Entity(name = "nutrition_details")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Medicine {
+public class Nutrition {
+
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -25,26 +25,19 @@ public class Medicine {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @Column(name = "medicine_name")
     @NotNull
     @Length(min = 2)
-    private String name;
+    @Column(name = "food_name")
+    private String foodName;
 
-//    private MedicineType type;
+    @Column(name = "brand")
+    private String brand;
 
-    @Column(name = "dosage")
-    private String dosage;
+    @Column(name = "description")
+    private String description;
 
-    @Column(name = "importancy")
-    @Enumerated(EnumType.STRING)
-    private MedicineImportancy importancy;
 
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
-    /**
-     * optional
-     */
-//    private LocalDate treatmentStartDate;
-//    private LocalDate treatmentEndDate;
 }

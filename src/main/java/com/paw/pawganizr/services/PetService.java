@@ -1,10 +1,9 @@
-package com.paw.pawganizr.service;
+package com.paw.pawganizr.services;
 
-import com.paw.pawganizr.model.AppUser;
-import com.paw.pawganizr.model.Pet;
-import com.paw.pawganizr.repository.PetRepository;
-import com.paw.pawganizr.repository.UserRepository;
-import org.hibernate.service.UnknownUnwrapTypeException;
+import com.paw.pawganizr.models.AppUser;
+import com.paw.pawganizr.models.Pet;
+import com.paw.pawganizr.repositories.PetRepository;
+import com.paw.pawganizr.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

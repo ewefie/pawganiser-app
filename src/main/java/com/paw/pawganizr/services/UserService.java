@@ -1,7 +1,8 @@
-package com.paw.pawganizr.service;
+package com.paw.pawganizr.services;
 
-import com.paw.pawganizr.model.AppUser;
-import com.paw.pawganizr.repository.UserRepository;
+import com.paw.pawganizr.exceptions.ResourceNotFoundException;
+import com.paw.pawganizr.models.AppUser;
+import com.paw.pawganizr.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,12 +20,15 @@ public class UserService {
     }
 
     public AppUser save(final AppUser user) {
-        userRepository.save(user);
-        return user;
+        return userRepository.save(user);
     }
 
     public Optional<AppUser> findUserById(final UUID id) {
         return userRepository.findById(id);
+    }
+
+    public AppUser findExistingUser(final UUID id) {
+        return findUserById(id).orElseThrow(() -> new ResourceNotFoundException("User with given id does not exist"));
     }
 
     public void delete(final UUID id) {
@@ -32,12 +36,7 @@ public class UserService {
     }
 
     public AppUser update(final UUID id, final AppUser user) {
-//        todo: add method body maybe in Controller class - not here
-        return null;
-    }
-
-
-    public List<AppUser> findAll() {
-        return userRepository.findAll();
+        user.setId(id);
+        return userRepository.save(user);
     }
 }

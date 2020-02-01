@@ -1,4 +1,4 @@
-package com.paw.pawganizr.model;
+package com.paw.pawganizr.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -11,7 +11,6 @@ import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
-import java.util.Date;
 import java.util.UUID;
 
 import static java.util.Objects.isNull;
@@ -20,7 +19,7 @@ import static java.util.Objects.isNull;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class MedicalService {
+public class Treatment {
 
     @Id
     @GeneratedValue(generator = "UUID")

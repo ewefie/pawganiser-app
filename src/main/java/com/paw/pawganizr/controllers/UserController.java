@@ -1,8 +1,8 @@
-package com.paw.pawganizr.controller;
+package com.paw.pawganizr.controllers;
 
 import com.paw.pawganizr.exceptions.ResourceNotFoundException;
-import com.paw.pawganizr.model.AppUser;
-import com.paw.pawganizr.service.UserService;
+import com.paw.pawganizr.models.AppUser;
+import com.paw.pawganizr.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,11 +23,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/")
-    public List<AppUser> getAllUSers() {
-        return userService.findAll();
-    }
-
     @PostMapping("/")
     public AppUser createNewUser(@Valid @RequestBody AppUser user) {
         return userService.save(user);
@@ -35,9 +30,7 @@ public class UserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AppUser> getUserById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        AppUser appUser = userService
-                .findUserById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet user not found for this id :: " + id));
+        AppUser appUser = userService.findExistingUser(id);
         return ResponseEntity.ok().body(appUser);
     }
 
@@ -51,10 +44,6 @@ public class UserController {
         appUser.setEmail(userDetails.getEmail());
         appUser.setFirstName(userDetails.getFirstName());
         appUser.setLastName(userDetails.getLastName());
-//        appUser.setFavouriteVet(userDetails.getFavouriteVet());
-
-//        rather not this way
-//        appUser.setPets(userDetails.getPets());
 
         final AppUser updatedUser = userService.save(appUser);
         return ResponseEntity.ok().body(updatedUser);
@@ -62,13 +51,8 @@ public class UserController {
 
     @DeleteMapping("/{id}")
     public Map<String, Boolean> deleteUser(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        AppUser user = userService
-                .findUserById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet user not found for this id :: " + id));
-        userService.delete(user.getId());
         Map<String, Boolean> response = new HashMap<>();
         response.put("deleted", Boolean.TRUE);
         return response;
     }
-
 }

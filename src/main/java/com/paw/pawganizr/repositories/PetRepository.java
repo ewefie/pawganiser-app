@@ -1,11 +1,11 @@
-package com.paw.pawganizr.repository;
+package com.paw.pawganizr.repositories;
 
-import com.paw.pawganizr.model.AppUser;
+import com.paw.pawganizr.models.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
 @Repository
-public interface UserRepository extends JpaRepository<AppUser, UUID> {
+public interface PetRepository extends JpaRepository<Pet, UUID> {
 }

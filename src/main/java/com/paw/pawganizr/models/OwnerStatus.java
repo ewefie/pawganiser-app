@@ -1,4 +1,4 @@
-package com.paw.pawganizr.model;
+package com.paw.pawganizr.models;
 
 //nieużywane
 public enum OwnerStatus {

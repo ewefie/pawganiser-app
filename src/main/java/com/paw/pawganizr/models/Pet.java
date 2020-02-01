@@ -1,4 +1,4 @@
-package com.paw.pawganizr.model;
+package com.paw.pawganizr.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
-import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import javax.validation.constraints.AssertTrue;
@@ -82,7 +81,7 @@ public class Pet {
     @JsonIgnore
     @OneToMany(mappedBy = "pet")
 //    @Column(name = "medical_services")
-    private List<MedicalService> medicalServices;
+    private List<Treatment> treatments;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pet")

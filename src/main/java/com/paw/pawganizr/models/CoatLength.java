@@ -1,4 +1,4 @@
-package com.paw.pawganizr.model;
+package com.paw.pawganizr.models;
 //nieużywany
 public enum CoatLength {
     NO_HAIR,

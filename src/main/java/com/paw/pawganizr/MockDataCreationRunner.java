@@ -1,11 +1,11 @@
 package com.paw.pawganizr;
 
-import com.paw.pawganizr.model.AppUser;
-import com.paw.pawganizr.model.Pet;
-import com.paw.pawganizr.model.PetGender;
-import com.paw.pawganizr.model.PetType;
-import com.paw.pawganizr.repository.PetRepository;
-import com.paw.pawganizr.repository.UserRepository;
+import com.paw.pawganizr.models.AppUser;
+import com.paw.pawganizr.models.Pet;
+import com.paw.pawganizr.models.PetGender;
+import com.paw.pawganizr.models.PetType;
+import com.paw.pawganizr.repositories.PetRepository;
+import com.paw.pawganizr.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
