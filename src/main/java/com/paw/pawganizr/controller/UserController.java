@@ -10,6 +10,7 @@ import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @RestController
 //@CrossOrigin(origins = "adres na którym będzie zdeployowany angular")
@@ -33,7 +34,7 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppUser> getUserById(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+    public ResponseEntity<AppUser> getUserById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
         AppUser appUser = userService
                 .findUserById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet user not found for this id :: " + id));
@@ -41,7 +42,7 @@ public class UserController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppUser> updateUser(@PathVariable(value = "id") Long id,
+    public ResponseEntity<AppUser> updateUser(@PathVariable(value = "id") UUID id,
                                               @Valid @RequestBody AppUser userDetails) throws ResourceNotFoundException {
         AppUser appUser = userService
                 .findUserById(id)
@@ -60,7 +61,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") Long id) throws ResourceNotFoundException {
+    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
         AppUser user = userService
                 .findUserById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Pet user not found for this id :: " + id));

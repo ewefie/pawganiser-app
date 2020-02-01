@@ -2,9 +2,10 @@ package com.paw.pawganizr.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
@@ -15,7 +16,6 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 import java.util.UUID;
 
 import static java.util.Objects.isNull;
@@ -24,7 +24,8 @@ import static java.util.Objects.isNull;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public abstract class Pet {
+@Builder
+public class Pet {
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -34,7 +35,7 @@ public abstract class Pet {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
     /**
@@ -51,7 +52,7 @@ public abstract class Pet {
     private PetType type;
 
     @ManyToOne
-    @Column(name = "owner_id")
+    @JoinColumn(name = "owner_id")
     private AppUser owner;
 
     /**

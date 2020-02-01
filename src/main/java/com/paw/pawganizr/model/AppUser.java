@@ -1,9 +1,7 @@
 package com.paw.pawganizr.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
 import org.springframework.data.annotation.CreatedDate;
@@ -20,6 +18,7 @@ import java.util.UUID;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class AppUser {
     @Id
     @GeneratedValue(generator = "UUID")
@@ -30,7 +29,7 @@ public class AppUser {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
-    @CreatedDate
+    @CreationTimestamp
     @Column(name = "created_at")
     private Date createdAt;
 
@@ -55,10 +54,10 @@ public class AppUser {
     /**
      * optional fields
      */
-    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "user")
     private List<Contact> contacts;
 
 
-    @OneToMany(mappedBy = "owner", fetch = FetchType.EAGER, cascade = CascadeType.REMOVE)
+    @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
 }

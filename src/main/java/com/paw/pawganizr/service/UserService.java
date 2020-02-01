@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -22,15 +23,15 @@ public class UserService {
         return user;
     }
 
-    public Optional<AppUser> findUserById(final Long id) {
+    public Optional<AppUser> findUserById(final UUID id) {
         return userRepository.findById(id);
     }
 
-    public void delete(final Long id) {
+    public void delete(final UUID id) {
         userRepository.deleteById(id);
     }
 
-    public AppUser update(final Long id, final AppUser user) {
+    public AppUser update(final UUID id, final AppUser user) {
 //        todo: add method body maybe in Controller class - not here
         return null;
     }

@@ -38,18 +38,18 @@ class PawganizrApplicationTests {
         Assert.assertNotNull(appUser);
     }
 
-    @Test
-    public void testCreateUser() {
-        AppUser user = new AppUser();
-        user.setEmail("test@test.test");
-        user.setFirstName("test");
-        user.setLastName("test");
-        user.setCreatedAt(new Date());
-        user.setPets(new HashSet<>());
-
-        ResponseEntity<AppUser> postResponse = restTemplate.postForEntity(getRootUrl() + "/user", user, AppUser.class);
-
-
-    }
+//    @Test
+//    public void testCreateUser() {
+//        AppUser user = new AppUser();
+//        user.setEmail("test@test.test");
+//        user.setFirstName("test");
+//        user.setLastName("test");
+//        user.setCreatedAt(new Date());
+//        user.setPets(new HashSet<>());
+//
+//        ResponseEntity<AppUser> postResponse = restTemplate.postForEntity(getRootUrl() + "/user", user, AppUser.class);
+//
+//
+//    }
 
 }
