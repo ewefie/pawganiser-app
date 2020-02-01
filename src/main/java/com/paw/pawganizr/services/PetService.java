@@ -15,19 +15,19 @@ import java.util.UUID;
 @Transactional
 public class PetService {
     private final UserRepository userRepository;
+    private final UserService userService;
     private final PetRepository petRepository;
 
-    public PetService(UserRepository userRepository, PetRepository petRepository) {
+    public PetService(UserRepository userRepository, UserService userService, PetRepository petRepository) {
         this.userRepository = userRepository;
+        this.userService = userService;
         this.petRepository = petRepository;
     }
 
-    public void save(final Pet pet, final UUID userId) {
-        final Optional<AppUser> optionalPetUser = userRepository.findById(userId);
-        if (optionalPetUser.isPresent()) {
-//            pet.setOwner(optionalPetUser.get());
-            petRepository.save(pet);
-        }
+    public void addPetToUser(final Pet pet, final UUID id) {
+        final AppUser existingUser = userService.findExistingUser(id);
+        pet.setOwner(existingUser);
+        petRepository.save(pet);
     }
 
     public Optional<Pet> findPetById(final UUID id) {
@@ -38,8 +38,10 @@ public class PetService {
         petRepository.deleteById(id);
     }
 
-    public List<Pet> findAll() {
-        return petRepository.findAll();
+    public List<Pet> findAllPets(final UUID appUserId) {
+        final AppUser existingUser = userService.findExistingUser(appUserId);
+        return petRepository.findAllByOwner(existingUser);
     }
+
 
 }

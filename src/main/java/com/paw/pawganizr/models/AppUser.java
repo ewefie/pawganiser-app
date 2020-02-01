@@ -55,7 +55,6 @@ public class AppUser {
     @OneToMany(mappedBy = "user")
     private List<Contact> contacts;
 
-
     @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
 }
