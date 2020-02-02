@@ -1,6 +1,9 @@
 package com.paw.pawganizr.models;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
@@ -8,7 +11,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
@@ -29,18 +32,18 @@ public class AppUser {
 
     @CreationTimestamp
     @Column(name = "created_at")
-    private Date createdAt;
+    private LocalDate createdAt;
 
     /**
      * mandatory for creating new account:
      */
     @NotNull
-    @Length(min = 2)
+    @Length(min = 2, message = "First name has to be at at least 2 character long")
     @Column(name = "first_name")
     private String firstName;
 
     @NotNull
-    @Length(min = 2)
+    @Length(min = 2, message = "Last name has to be at at least 2 character long")
     @Column(name = "last_name")
     private String lastName;
 

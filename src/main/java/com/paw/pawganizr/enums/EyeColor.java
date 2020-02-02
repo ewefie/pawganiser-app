@@ -1,6 +1,6 @@
-package com.paw.pawganizr.models;
+package com.paw.pawganizr.enums;
 
-//nieuzywana
+@Deprecated
 public enum EyeColor {
     GREEN,
     BLUE,

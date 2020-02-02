@@ -3,6 +3,7 @@ package com.paw.pawganizr.controllers;
 import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.services.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,35 +25,28 @@ public class UserController {
     }
 
     @PostMapping("/")
+    @ResponseStatus(HttpStatus.CREATED)
     public AppUser createNewUser(@Valid @RequestBody AppUser user) {
         return userService.save(user);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AppUser> getUserById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        AppUser appUser = userService.findExistingUser(id);
-        return ResponseEntity.ok().body(appUser);
+    public AppUser getUserById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
+        return userService.findExistingUser(id);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<AppUser> updateUser(@PathVariable(value = "id") UUID id,
-                                              @Valid @RequestBody AppUser userDetails) throws ResourceNotFoundException {
-        AppUser appUser = userService
-                .findUserById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Pet user not found for this id :: " + id));
-        //fixme: move it to method
-        appUser.setEmail(userDetails.getEmail());
-        appUser.setFirstName(userDetails.getFirstName());
-        appUser.setLastName(userDetails.getLastName());
-
-        final AppUser updatedUser = userService.save(appUser);
-        return ResponseEntity.ok().body(updatedUser);
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void updateUser(@PathVariable(value = "id") UUID id,
+                           @Valid @RequestBody AppUser userDetails) throws ResourceNotFoundException {
+        userService.update(id, userDetails);
     }
 
     @DeleteMapping("/{id}")
-    public Map<String, Boolean> deleteUser(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
-        Map<String, Boolean> response = new HashMap<>();
-        response.put("deleted", Boolean.TRUE);
-        return response;
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteUser(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
+        userService.delete(id);
     }
+
+    //todo: method to update partially
 }

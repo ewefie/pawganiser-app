@@ -2,6 +2,7 @@ package com.paw.pawganizr.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.paw.pawganizr.enums.TreatmentType;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -1,6 +1,9 @@
 package com.paw.pawganizr.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.paw.pawganizr.enums.CoatColor;
+import com.paw.pawganizr.enums.PetGender;
+import com.paw.pawganizr.enums.PetType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

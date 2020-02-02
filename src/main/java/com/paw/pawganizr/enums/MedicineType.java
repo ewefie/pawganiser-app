@@ -1,4 +1,4 @@
-package com.paw.pawganizr.models;
+package com.paw.pawganizr.enums;
 
 //aktualnie nieuzywane
 public enum MedicineType {

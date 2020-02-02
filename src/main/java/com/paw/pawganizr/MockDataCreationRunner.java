@@ -2,8 +2,8 @@ package com.paw.pawganizr;
 
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.models.Pet;
-import com.paw.pawganizr.models.PetGender;
-import com.paw.pawganizr.models.PetType;
+import com.paw.pawganizr.enums.PetGender;
+import com.paw.pawganizr.enums.PetType;
 import com.paw.pawganizr.repositories.PetRepository;
 import com.paw.pawganizr.repositories.UserRepository;
 import org.springframework.boot.CommandLineRunner;

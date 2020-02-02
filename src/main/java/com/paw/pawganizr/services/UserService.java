@@ -3,6 +3,7 @@ package com.paw.pawganizr.services;
 import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.repositories.UserRepository;
+import com.paw.pawganizr.wrappers.Pets;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,9 @@ public class UserService {
     }
 
     public AppUser update(final UUID id, final AppUser user) {
+        findExistingUser(id);
         user.setId(id);
         return userRepository.save(user);
     }
+//todo: add update partially, validate updated user data
 }

@@ -2,12 +2,11 @@ package com.paw.pawganizr.services;
 
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.models.Contact;
-import com.paw.pawganizr.models.Contacts;
+import com.paw.pawganizr.wrappers.Contacts;
 import com.paw.pawganizr.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -38,6 +37,7 @@ public class ContactService {
     }
 
     public Contact updateContact(final UUID appUserId, final Contact updatedContact) {
+        userService.findExistingUser(appUserId);
         updatedContact.setId(appUserId);
         return contactRepository.save(updatedContact);
     }

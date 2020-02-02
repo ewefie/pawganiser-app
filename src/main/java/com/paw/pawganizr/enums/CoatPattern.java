@@ -1,5 +1,6 @@
-package com.paw.pawganizr.models;
-//nieużywana
+package com.paw.pawganizr.enums;
+
+@Deprecated
 public enum CoatPattern {
     SOLID,
     TABBY,

@@ -1,5 +1,6 @@
 package com.paw.pawganizr.models;
 
+import com.paw.pawganizr.enums.ContactType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

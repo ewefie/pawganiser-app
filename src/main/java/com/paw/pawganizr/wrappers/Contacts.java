@@ -1,5 +1,6 @@
-package com.paw.pawganizr.models;
+package com.paw.pawganizr.wrappers;
 
+import com.paw.pawganizr.models.Contact;
 import lombok.AllArgsConstructor;
 
 import java.util.List;

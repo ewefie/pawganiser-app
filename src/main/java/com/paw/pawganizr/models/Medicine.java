@@ -1,5 +1,6 @@
 package com.paw.pawganizr.models;
 
+import com.paw.pawganizr.enums.MedicineImportancy;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
