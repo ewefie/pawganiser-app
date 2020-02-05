@@ -15,7 +15,7 @@ import java.util.UUID;
 
 @RestController
 //@CrossOrigin(origins = "adres na którym będzie zdeployowany angular")
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class UserController {
 
     private final UserService userService;

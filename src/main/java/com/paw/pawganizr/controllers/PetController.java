@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping("/api/users")
 public class PetController {
 
     private final PetService petService;
