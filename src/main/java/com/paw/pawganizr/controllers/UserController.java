@@ -27,12 +27,18 @@ public class UserController {
     @PostMapping("/")
     @ResponseStatus(HttpStatus.CREATED)
     public AppUser createNewUser(@Valid @RequestBody AppUser user) {
-        return userService.save(user);
+        return userService.createUser(user);
     }
 
     @GetMapping("/{id}")
     public AppUser getUserById(@PathVariable(value = "id") UUID id) throws ResourceNotFoundException {
         return userService.findExistingUser(id);
+    }
+
+    //only for tests
+    @GetMapping("/")
+    public List<AppUser> getAllUsers() throws ResourceNotFoundException {
+        return userService.findAll();
     }
 
     @PutMapping("/{id}")

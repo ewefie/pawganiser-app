@@ -51,7 +51,7 @@ public class PetService {
 
     public BasicPetInfos getBasicPetInfoByUserId(final UUID id) {
         final List<BasicPetInfo> petInfos = findAllPetsByUserId(id).stream()
-                .map(pet -> mapper.mapPetToBasicPetInfo(pet))
+                .map(mapper::mapPetToBasicPetInfo)
                 .collect(Collectors.toList());
         return new BasicPetInfos(petInfos);
     }
@@ -59,6 +59,14 @@ public class PetService {
     public Pet findExistingPetById(final UUID petId) {
         return findPetById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet with given id does not exist"));
     }
-//todo: validate pet data
-    //update partially
+
+    public Pet updatePet(final UUID petId, final Pet updatedPet) {
+//todo: validate pet data, add method body
+        return null;
+    }
+//
+    public Pet updatePetBasicData(final UUID petId) {
+//todo: validate pet data, add method body
+        return null;
+    }
 }

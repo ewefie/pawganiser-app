@@ -20,7 +20,11 @@ public class UserService {
         this.userRepository = userRepository;
     }
 
-    public AppUser save(final AppUser user) {
+    public AppUser createUser(final AppUser user) {
+//        final Optional<AppUser> appUserOptional = findUserById(user.getId());
+//        if (appUserOptional.isPresent()) {
+//            throw new UserAlreadyExistsException();
+//        }
         return userRepository.save(user);
     }
 
@@ -40,6 +44,11 @@ public class UserService {
         findExistingUser(id);
         user.setId(id);
         return userRepository.save(user);
+    }
+
+    //only for tests
+    public List<AppUser> findAll() {
+        return userRepository.findAll();
     }
 //todo: add update partially, validate updated user data
 }

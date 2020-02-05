@@ -53,6 +53,7 @@ public class Pet {
     @NotNull
     private PetType type;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private AppUser owner;
@@ -92,13 +93,11 @@ public class Pet {
     private List<Nutrition> nutrition;
 
     @Column(name = "birth_name")
-    @NotNull
     private LocalDate birthDate;
     /**
      * only after checking "pet is dead" option, input for death date should be shown
      */
     @Column(name = "dead")
-    @NotNull
     private boolean dead;
 
     @Column(name = "death_date")
