@@ -25,14 +25,12 @@ public class PetController {
         return petService.addPetToUser(pet, userId);
     }
 
-    //czy tu powinno byc tylko id peta czy tez usera?
     @GetMapping("/{userId}/pets/{petId}")
     public Pet findPetById(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId) {
-        //fixme: check czy user istnieje/ ma dostęp?
         return petService.findExistingPetById(petId);
     }
 
-    @GetMapping("/{userId}/pets/")
+    @GetMapping("/{userId}/pets")
     public BasicPetInfos findAllUserPets(@PathVariable("userId") final UUID userId) {
         return petService.getBasicPetInfoByUserId(userId);
     }
@@ -40,17 +38,22 @@ public class PetController {
     @DeleteMapping("/{userId}/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePetById(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId) {
-        //fixme: check czy user istnieje/ ma dostęp?
-        petService.delete(petId);
+        petService.deletePetById(petId);
+    }
+
+    @DeleteMapping("/{userId}/pets")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteAllPets(@PathVariable("userId") final UUID userId) {
+        petService.deleteAllPetsByUserId(userId);
     }
 
     @PutMapping("/{userId}/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePet(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId,
                           @RequestBody final Pet pet) {
-        //fixme: check czy user istnieje/ ma dostęp?
         petService.updatePet(petId, pet);
     }
+
 
 
 }

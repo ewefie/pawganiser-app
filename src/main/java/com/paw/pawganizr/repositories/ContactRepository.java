@@ -19,4 +19,8 @@ public interface ContactRepository extends JpaRepository<Contact, UUID> {
 
     @Query("select c from contacts c where c.user.id = :ownerId")
     List<Contact> findAllContactsByOwnerId(@Param("ownerId") UUID ownerId);
+
+    void deleteAllByUserId(UUID userId);
+
+
 }

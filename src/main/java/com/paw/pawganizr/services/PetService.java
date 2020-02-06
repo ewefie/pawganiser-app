@@ -33,15 +33,20 @@ public class PetService {
     public Pet addPetToUser(final Pet pet, final UUID id) {
         final AppUser existingUser = userService.findExistingUser(id);
         pet.setOwner(existingUser);
-      return  petRepository.save(pet);
+        return petRepository.save(pet);
     }
 
     public Optional<Pet> findPetById(final UUID id) {
         return petRepository.findById(id);
     }
 
-    public void delete(final UUID id) {
+    public void deletePetById(final UUID id) {
         petRepository.deleteById(id);
+    }
+
+    public void deleteAllPetsByUserId(final UUID userId) {
+        userService.findExistingUser(userId);
+        petRepository.deleteAllByOwnerId(userId);
     }
 
     private List<Pet> findAllPetsByUserId(final UUID appUserId) {
@@ -64,7 +69,8 @@ public class PetService {
 //todo: validate pet data, add method body
         return null;
     }
-//
+
+    //
     public Pet updatePetBasicData(final UUID petId) {
 //todo: validate pet data, add method body
         return null;
