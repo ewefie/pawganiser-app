@@ -1,5 +1,6 @@
 package com.paw.pawganizr.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -36,7 +37,7 @@ public class Nutrition {
     @Column(name = "description")
     private String description;
 
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;

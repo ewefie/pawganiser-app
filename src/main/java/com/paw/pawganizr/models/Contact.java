@@ -1,5 +1,6 @@
 package com.paw.pawganizr.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paw.pawganizr.enums.ContactType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -42,6 +43,7 @@ public class Contact {
     @Length(min = 2)
     private String name;
 
+    @JsonIgnore
     @JoinColumn(name = "user_id")
     @ManyToOne
     private AppUser user;

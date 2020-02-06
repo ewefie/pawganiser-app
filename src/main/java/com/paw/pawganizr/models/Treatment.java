@@ -46,6 +46,7 @@ public class Treatment {
     @Column(name = "treatment_end_date")
     private LocalDateTime treatmentEndDate;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;

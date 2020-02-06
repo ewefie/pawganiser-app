@@ -1,5 +1,6 @@
 package com.paw.pawganizr.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paw.pawganizr.enums.MedicineImportancy;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -39,6 +40,7 @@ public class Medicine {
     @Enumerated(EnumType.STRING)
     private MedicineImportancy importancy;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
