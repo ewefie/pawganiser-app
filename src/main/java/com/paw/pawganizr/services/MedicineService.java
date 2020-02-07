@@ -44,7 +44,7 @@ public class MedicineService {
 
     public Medicines findAllMedicinesByPetId(final UUID petId, final UUID userId) {
         throwIfUserOrPetDoesNotExist(userId, petId);
-        return new Medicines(medicineRepository.findAllMedicinesByPetId(petId));
+        return new Medicines(medicineRepository.findAllByPetId(petId));
     }
 
     private Optional<Medicine> findMedicineById(final UUID medicineId) {

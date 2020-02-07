@@ -13,10 +13,8 @@ import java.util.UUID;
 @Repository
 public interface MedicineRepository extends JpaRepository<Medicine, UUID> {
 
-//    List<Medicine> findAllByPet(Pet pet);
 
-    @Query("select m from medicines m where m.pet.id = :petId")
-    List<Medicine> findAllMedicinesByPetId(@Param("petId") UUID petId);
+    List<Medicine> findAllByPetId(final UUID petId);
 
     void deleteAllByPetId(final UUID petId);
 }
