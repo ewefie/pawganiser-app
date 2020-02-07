@@ -1,5 +1,6 @@
 package com.paw.pawganizr.repositories;
 
+import com.paw.pawganizr.models.Medicine;
 import com.paw.pawganizr.models.Nutrition;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,7 +12,8 @@ import java.util.UUID;
 
 @Repository
 public interface NutritionRepository extends JpaRepository<Nutrition, UUID> {
-    @Query("select n from nutrition_details n where n.pet.id=:petId")
-    List<Nutrition> findAllByPetId(@Param("petId") final UUID petId);
 
+    List<Nutrition> findAllByPetId(final UUID petId);
+
+    void deleteAllByPetId(final UUID petId);
 }

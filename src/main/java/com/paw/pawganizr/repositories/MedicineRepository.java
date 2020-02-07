@@ -18,4 +18,5 @@ public interface MedicineRepository extends JpaRepository<Medicine, UUID> {
     @Query("select m from medicines m where m.pet.id = :petId")
     List<Medicine> findAllMedicinesByPetId(@Param("petId") UUID petId);
 
+    void deleteAllByPetId(final UUID petId);
 }

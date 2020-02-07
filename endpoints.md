@@ -32,4 +32,20 @@
 - (Remove all treatments by pet id) DELETE 165.22.27.62:8090/api/users/{userId}/pets/{petId}/treatments
 - (Remove treatment by its ID) DELETE 165.22.27.62:8090/api/users/{userId}/pets/{petId}/treatments/{treatmentId}
 
+###Medicines
+- POST 165.22.27.62:8090/api/users/{userId}/pets/{petId}/medicines
+- GET 165.22.27.62:8090/api/users/{userId}/pets/{petId}/medicines
+- GET 165.22.27.62:8090/api/users/{userId}/pets/{petId}/medicines/{medicineId}
+- PUT 165.22.27.62:8090/api/users/{userId}/pets/{petId}/medicines/{medicineId}
+- (Remove all medicines by pet id) DELETE 165.22.27.62:8090/api/users/{userId}/pets/{petId}/medicines
+- (Remove medicine by its ID) DELETE 165.22.27.62:8090/api/users/{userId}/pets/{petId}/medicines/{medicineId}
+
+###Nutritions
+- POST 165.22.27.62:8090/api/users/{userId}/pets/{petId}/nutritions
+- GET 165.22.27.62:8090/api/users/{userId}/pets/{petId}/nutritions
+- GET 165.22.27.62:8090/api/users/{userId}/pets/{petId}/nutritions/{nutritionId}
+- PUT 165.22.27.62:8090/api/users/{userId}/pets/{petId}/nutritions/{nutritionId}
+- (Remove all nutritions by pet id) DELETE 165.22.27.62:8090/api/users/{userId}/pets/{petId}/nutritions
+- (Remove nutrition by its ID) DELETE 165.22.27.62:8090/api/users/{userId}/pets/{petId}/nutritions/{nutritionId}
+
 

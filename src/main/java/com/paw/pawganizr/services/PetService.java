@@ -75,4 +75,9 @@ public class PetService {
 //todo: validate pet data, add method body
         return null;
     }
+
+    public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
+        findExistingPetById(petId);
+        userService.findExistingUser(userId);
+    }
 }
