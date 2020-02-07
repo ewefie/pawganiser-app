@@ -53,7 +53,7 @@ public class TreatmentService {
 
     public Treatments findAllTreatmentsByPetId(final UUID petId, UUID userId) {
         throwIfUserOrPetDoesNotExist(userId, petId);
-        return new Treatments(treatmentRepository.findAllTreatmentsByPetId(petId));
+        return new Treatments(treatmentRepository.findAllByPetId(petId));
     }
 
     private void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {

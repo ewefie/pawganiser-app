@@ -14,8 +14,10 @@ import java.util.UUID;
 public interface TreatmentRepository extends JpaRepository<Treatment, UUID> {
 
 
-    @Query("select t from treatments t where t.pet.id = :petId")
-    List<Treatment> findAllTreatmentsByPetId(@Param("petId") UUID petId);
+//    @Query("select t from treatments t where t.pet.id = :petId")
+//    List<Treatment> findAllTreatmentsByPetId(@Param("petId") UUID petId);
+//
+    List<Treatment> findAllByPetId(final UUID petId);
 
     void deleteAllByPetId(UUID petId);
 

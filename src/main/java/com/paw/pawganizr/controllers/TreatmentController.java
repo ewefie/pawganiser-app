@@ -3,7 +3,7 @@ package com.paw.pawganizr.controllers;
 import com.paw.pawganizr.models.Treatment;
 import com.paw.pawganizr.services.TreatmentService;
 import com.paw.pawganizr.wrappers.Treatments;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -33,6 +33,7 @@ public class TreatmentController {
     }
 
     @PostMapping("/{userId}/pets/{petId}/treatments")
+    @ResponseStatus(HttpStatus.CREATED)
     public Treatment create(@PathVariable(name = "userId") final UUID userId,
                             @PathVariable(name = "petId") final UUID petId,
                             @RequestBody @Valid final Treatment treatment) {
@@ -40,6 +41,7 @@ public class TreatmentController {
     }
 
     @PutMapping("/{userId}/pets/{petId}/treatments/{treatmentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public Treatment update(@PathVariable(name = "userId") final UUID userId,
                             @PathVariable(name = "petId") final UUID petId,
                             @PathVariable(name = "treatmentId") final UUID treatmentId,
@@ -49,6 +51,7 @@ public class TreatmentController {
 
 
     @DeleteMapping("/{userId}/pets/{petId}/treatments/{treatmentId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable(name = "userId") final UUID userId,
                            @PathVariable(name = "petId") final UUID petId,
                            @PathVariable(name = "treatmentId") final UUID treatmentId) {
@@ -56,6 +59,7 @@ public class TreatmentController {
     }
 
     @DeleteMapping("/{userId}/pets/{petId}/treatments")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAll(@PathVariable(name = "userId") final UUID userId,
                           @PathVariable(name = "petId") final UUID petId) {
         treatmentService.deleteAllTreatments(petId);
