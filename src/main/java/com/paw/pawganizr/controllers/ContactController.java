@@ -14,11 +14,9 @@ import java.util.UUID;
 @RequestMapping("/api/users")
 public class ContactController {
 
-    private final UserService userService;
     private final ContactService contactService;
 
-    public ContactController(UserService userService, ContactService contactService) {
-        this.userService = userService;
+    public ContactController(ContactService contactService) {
         this.contactService = contactService;
     }
 
@@ -28,19 +26,22 @@ public class ContactController {
     }
 
     @GetMapping("/{userId}/contacts/{contactId}")
-    public Contact findContact(@PathVariable(name = "userId") final UUID userId, @PathVariable(name = "contactId") final UUID contactId) {
+    public Contact findContact(@PathVariable(name = "userId") final UUID userId,
+                               @PathVariable(name = "contactId") final UUID contactId) {
         return contactService.findExistingContact(userId, contactId);
     }
 
     @PostMapping("/{userId}/contacts")
     @ResponseStatus(HttpStatus.CREATED)
-    public Contact createContact(@Valid @RequestBody final Contact contact, @PathVariable("userId") final UUID userId) {
+    public Contact createContact(@Valid @RequestBody final Contact contact,
+                                 @PathVariable("userId") final UUID userId) {
         return contactService.createContact(userId, contact);
     }
 
     @DeleteMapping("/{userId}/contacts/{contactId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteContactById(@PathVariable("contactId") final UUID contactId, @PathVariable("userId") final UUID userId) {
+    public void deleteContactById(@PathVariable("contactId") final UUID contactId,
+                                  @PathVariable("userId") final UUID userId) {
         contactService.deleteById(contactId, userId);
     }
 
@@ -52,10 +53,9 @@ public class ContactController {
 
     @PutMapping("/{userId}/contacts/{contactId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateContact(@PathVariable("contactId") final UUID contactId, @PathVariable("userId") final UUID userId, @RequestBody @Valid Contact updatedContact) {
+    public void updateContact(@PathVariable("contactId") final UUID contactId,
+                              @PathVariable("userId") final UUID userId,
+                              @RequestBody @Valid Contact updatedContact) {
         contactService.updateContact(userId, contactId, updatedContact);
     }
-    //TODO: ADD METHOD TO UPDATE CONTACT
-
-
 }

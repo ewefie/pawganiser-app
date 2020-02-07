@@ -28,12 +28,13 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Optional<AppUser> findUserById(final UUID id) {
+    private Optional<AppUser> findUserById(final UUID id) {
         return userRepository.findById(id);
     }
 
     public AppUser findExistingUser(final UUID id) {
-        return findUserById(id).orElseThrow(() -> new ResourceNotFoundException("User with given id does not exist"));
+        return findUserById(id).orElseThrow(() ->
+                new ResourceNotFoundException("User with given id does not exist"));
     }
 
     public void delete(final UUID id) {

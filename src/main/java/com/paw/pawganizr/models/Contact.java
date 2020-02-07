@@ -33,6 +33,7 @@ public class Contact {
 
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
+    @NotNull
     private ContactType type;
 
     @Column(name = "description")
