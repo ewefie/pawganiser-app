@@ -58,13 +58,13 @@ public class AppUser {
      * optional fields
      */
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL, orphanRemoval = true)
+//    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Contact> contacts;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "owner")
-    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
+    @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Pet> pets;
 
     //sprawdzić czy istnieje o takim mailu
