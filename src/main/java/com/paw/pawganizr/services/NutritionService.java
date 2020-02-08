@@ -4,7 +4,7 @@ import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.models.Nutrition;
 import com.paw.pawganizr.models.Pet;
 import com.paw.pawganizr.repositories.NutritionRepository;
-import com.paw.pawganizr.wrappers.Nutritions;
+import com.paw.pawganizr.wrappers.nutrients;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -13,12 +13,12 @@ import java.util.UUID;
 
 @Service
 @Transactional
-public class NutritionService {
+public class nutrientservice {
     private final UserService userService;
     final PetService petService;
     final NutritionRepository nutritionRepository;
 
-    public NutritionService(UserService userService, PetService petService, NutritionRepository nutritionRepository) {
+    public nutrientservice(UserService userService, PetService petService, NutritionRepository nutritionRepository) {
         this.userService = userService;
         this.petService = petService;
         this.nutritionRepository = nutritionRepository;
@@ -41,7 +41,7 @@ public class NutritionService {
         nutritionRepository.deleteById(id);
     }
 
-    public void deleteAllNutritions(final UUID petId, final UUID userId) {
+    public void deleteAllnutrients(final UUID petId, final UUID userId) {
         petService.throwIfUserOrPetDoesNotExist(userId, petId);
         nutritionRepository.deleteAllByPetId(petId);
     }
@@ -55,8 +55,8 @@ public class NutritionService {
         return findById(nutritionId).orElseThrow(() -> new ResourceNotFoundException("Nutrition with given id does not exist"));
     }
 
-    public Nutritions findAllNutritionsByPetId(final UUID petId, final UUID userId) {
+    public nutrients findAllnutrientsByPetId(final UUID petId, final UUID userId) {
         petService.throwIfUserOrPetDoesNotExist(userId, petId);
-        return new Nutritions(nutritionRepository.findAllByPetId(petId));
+        return new nutrients(nutritionRepository.findAllByPetId(petId));
     }
 }

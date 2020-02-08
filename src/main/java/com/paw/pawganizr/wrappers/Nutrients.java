@@ -8,6 +8,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @Data
-public class Nutritions {
-    private List<Nutrition> nutritions;
+public class nutrients {
+    private List<Nutrition> nutrients;
 }

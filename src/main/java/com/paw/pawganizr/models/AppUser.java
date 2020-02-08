@@ -1,5 +1,6 @@
 package com.paw.pawganizr.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -48,16 +49,17 @@ public class AppUser {
     private String lastName;
 
     @NotNull
-    @Column(name = "email")
+    @Column(name = "email", updatable = false)
     @Email(message = "Invalid email")
     private String email;
 
     /**
      * optional fields
      */
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<Contact> contacts;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
 }

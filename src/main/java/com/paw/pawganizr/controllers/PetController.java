@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-//fixme: figure out what to do with unused path variables
-
 @RestController
 @RequestMapping("/api/users")
 public class PetController {
@@ -52,7 +50,7 @@ public class PetController {
     @PutMapping("/{userId}/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePet(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId,
-                          @RequestBody final Pet pet) {
-        petService.updatePet(petId, pet);
+                          @RequestBody @Valid final Pet pet) {
+        petService.updatePet(userId, petId, pet);
     }
 }

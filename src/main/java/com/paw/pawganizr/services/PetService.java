@@ -65,15 +65,10 @@ public class PetService {
         return findPetById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet with given id does not exist"));
     }
 
-    public Pet updatePet(final UUID petId, final Pet updatedPet) {
-//todo: validate pet data, add method body
-        return null;
-    }
-
-    //
-    public Pet updatePetBasicData(final UUID petId) {
-//todo: validate pet data, add method body
-        return null;
+    public Pet updatePet(final UUID userId, final UUID petId, final Pet updatedPet) {
+        throwIfUserOrPetDoesNotExist(userId, petId);
+        updatedPet.setId(petId);
+        return petRepository.save(updatedPet);
     }
 
     public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
