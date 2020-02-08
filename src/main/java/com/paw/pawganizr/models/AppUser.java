@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
@@ -58,9 +59,12 @@ public class AppUser {
      */
     @JsonIgnore
     @OneToMany(mappedBy = "user")
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Contact> contacts;
+
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Pet> pets;
 
     //sprawdzić czy istnieje o takim mailu

@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
@@ -80,16 +81,19 @@ public class Pet {
     @JsonIgnore
     @OneToMany(mappedBy = "pet")
 //    @Column(name = "medicines")
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Medicine> medicines;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pet")
 //    @Column(name = "medical_services")
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Treatment> treatments;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pet")
 //    @Column(name = "nutrition_details")
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private List<Nutrition> nutrition;
 
     @Column(name = "birth_name")
