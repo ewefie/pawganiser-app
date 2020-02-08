@@ -2,7 +2,6 @@ package com.paw.pawganizr.controllers;
 
 import com.paw.pawganizr.models.Contact;
 import com.paw.pawganizr.services.ContactService;
-import com.paw.pawganizr.services.UserService;
 import com.paw.pawganizr.wrappers.Contacts;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -18,11 +17,6 @@ public class ContactController {
 
     public ContactController(ContactService contactService) {
         this.contactService = contactService;
-    }
-
-    @GetMapping("/hello")
-    public String printHello() {
-        return "Hello";
     }
 
     @GetMapping("/{userId}/contacts")
