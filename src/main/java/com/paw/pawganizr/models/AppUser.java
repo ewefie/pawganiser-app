@@ -62,4 +62,6 @@ public class AppUser {
     @JsonIgnore
     @OneToMany(mappedBy = "owner")
     private List<Pet> pets;
+
+    //sprawdzić czy istnieje o takim mailu
 }

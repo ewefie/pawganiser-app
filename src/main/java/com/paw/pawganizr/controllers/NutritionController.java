@@ -1,8 +1,8 @@
 package com.paw.pawganizr.controllers;
 
 import com.paw.pawganizr.models.Nutrition;
-import com.paw.pawganizr.services.nutrientservice;
-import com.paw.pawganizr.wrappers.nutrients;
+import com.paw.pawganizr.services.NutritionService;
+import com.paw.pawganizr.wrappers.Nutrients;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,23 +13,24 @@ import java.util.UUID;
 @RequestMapping("/api/users")
 public class NutritionController {
 
-    private final nutrientservice nutrientservice;
+    private final NutritionService nutritionService;
 
-    public NutritionController(nutrientservice nutrientservice) {
-        this.nutrientservice = nutrientservice;
+    public NutritionController(NutritionService nutritionService) {
+        this.nutritionService = nutritionService;
     }
+
 
     @GetMapping("/{userId}/pets/{petId}/nutrients/{nutritionId}")
     public Nutrition findById(@PathVariable(name = "userId") final UUID userId,
                               @PathVariable(name = "petId") final UUID petId,
                               @PathVariable(name = "nutritionId") final UUID nutritionId) {
-        return nutrientservice.findExistingNutritionById(nutritionId, petId, userId);
+        return nutritionService.findExistingNutritionById(nutritionId, petId, userId);
     }
 
     @GetMapping("/{userId}/pets/{petId}/nutrients")
-    public nutrients findAll(@PathVariable(name = "userId") final UUID userId,
-                              @PathVariable(name = "petId") final UUID petId) {
-        return nutrientservice.findAllnutrientsByPetId(petId, userId);
+    public Nutrients findAll(@PathVariable(name = "userId") final UUID userId,
+                             @PathVariable(name = "petId") final UUID petId) {
+        return nutritionService.findAllnutrientsByPetId(petId, userId);
     }
 
     @PostMapping("/{userId}/pets/{petId}/nutrients")
@@ -37,7 +38,7 @@ public class NutritionController {
     public Nutrition create(@PathVariable(name = "userId") final UUID userId,
                             @PathVariable(name = "petId") final UUID petId,
                             @RequestBody @Valid final Nutrition nutrition) {
-        return nutrientservice.addNutritionToPet(userId, petId, nutrition);
+        return nutritionService.addNutritionToPet(userId, petId, nutrition);
     }
 
     @PutMapping("/{userId}/pets/{petId}/nutrients/{nutritionId}")
@@ -46,7 +47,7 @@ public class NutritionController {
                             @PathVariable(name = "petId") final UUID petId,
                             @PathVariable(name = "nutritionId") final UUID nutritionId,
                             @RequestBody @Valid final Nutrition nutrition) {
-        return nutrientservice.updateNutrition(userId, petId, nutritionId, nutrition);
+        return nutritionService.updateNutrition(userId, petId, nutritionId, nutrition);
     }
 
 
@@ -55,13 +56,13 @@ public class NutritionController {
     public void deleteById(@PathVariable(name = "userId") final UUID userId,
                            @PathVariable(name = "petId") final UUID petId,
                            @PathVariable(name = "nutritionId") final UUID nutritionId) {
-        nutrientservice.deleteById(nutritionId);
+        nutritionService.deleteById(nutritionId);
     }
 
     @DeleteMapping("/{userId}/pets/{petId}/nutrients")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteAll(@PathVariable(name = "userId") final UUID userId,
                           @PathVariable(name = "petId") final UUID petId) {
-        nutrientservice.deleteAllnutrients(petId, userId);
+        nutritionService.deleteAllnutrients(petId, userId);
     }
 }

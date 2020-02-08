@@ -21,10 +21,6 @@ public class UserService {
     }
 
     public AppUser createUser(final AppUser user) {
-//        final Optional<AppUser> appUserOptional = findUserById(user.getId());
-//        if (appUserOptional.isPresent()) {
-//            throw new UserAlreadyExistsException();
-//        }
         return userRepository.save(user);
     }
 
