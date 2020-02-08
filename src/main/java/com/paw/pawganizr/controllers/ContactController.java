@@ -20,6 +20,11 @@ public class ContactController {
         this.contactService = contactService;
     }
 
+    @GetMapping("/hello")
+    public String printHello() {
+        return "Hello";
+    }
+
     @GetMapping("/{userId}/contacts")
     public Contacts findAllContacts(@PathVariable(name = "userId") final UUID userId) {
         return contactService.findAllContactsByUserId(userId);
