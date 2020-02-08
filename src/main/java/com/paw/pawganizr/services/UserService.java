@@ -1,9 +1,9 @@
 package com.paw.pawganizr.services;
 
 import com.paw.pawganizr.exceptions.ResourceNotFoundException;
+import com.paw.pawganizr.exceptions.UserAlreadyExistsException;
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.repositories.UserRepository;
-import com.paw.pawganizr.wrappers.Pets;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +21,7 @@ public class UserService {
     }
 
     public AppUser createUser(final AppUser user) {
+        throwIfUserWithGivenEmailExists(user.getEmail());
         return userRepository.save(user);
     }
 
@@ -47,5 +48,11 @@ public class UserService {
     public List<AppUser> findAll() {
         return userRepository.findAll();
     }
-//todo: add update partially, validate updated user data
+
+    private void throwIfUserWithGivenEmailExists(final String email) {
+        userRepository.findByEmail(email)
+                .ifPresent(pl -> {
+                    throw new UserAlreadyExistsException("User with given email already exists");
+                });
+    }
 }
