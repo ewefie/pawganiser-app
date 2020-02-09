@@ -1,9 +1,7 @@
 package com.paw.pawganizr.controllers;
 
-import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.models.Pet;
 import com.paw.pawganizr.services.PetService;
-import com.paw.pawganizr.services.UserService;
 import com.paw.pawganizr.wrappers.BasicPetInfos;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
