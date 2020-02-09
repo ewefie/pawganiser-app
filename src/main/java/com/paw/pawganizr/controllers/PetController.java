@@ -1,5 +1,6 @@
 package com.paw.pawganizr.controllers;
 
+import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.models.Pet;
 import com.paw.pawganizr.services.PetService;
 import com.paw.pawganizr.services.UserService;
@@ -16,53 +17,43 @@ import java.util.UUID;
 public class PetController {
 
     private final PetService petService;
-    private final UserService userService;
 
-    public PetController(PetService petService, UserService userService) {
+    public PetController(PetService petService) {
         this.petService = petService;
-        this.userService = userService;
     }
 
-    @PostMapping("/{userId}/pets")
+    @PostMapping("/pets")
     @ResponseStatus(HttpStatus.CREATED)
-    public Pet createPet(@Valid @RequestBody final Pet pet, @PathVariable("userId") final UUID userId) {
-        return petService.addPetToUser(pet, userId);
+    public Pet createPet(@Valid @RequestBody final Pet pet, final Principal principal) {
+        return petService.addPetToUser(pet, principal);
     }
 
-
-    @GetMapping("/{userId}/pets/{petId}")
-    public Pet findPetById(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId) {
+    @GetMapping("/pets/{petId}")
+    public Pet findPetById(@PathVariable("petId") final UUID petId) {
         return petService.findExistingPetById(petId);
     }
 
-    @GetMapping("/{userId}/pets")
-    public BasicPetInfos findAllUserPets(@PathVariable("userId") final UUID userId) {
-        return petService.getBasicPetInfoByUserId(userId);
+    @GetMapping("/pets")
+    public BasicPetInfos findAllUsersPets(final Principal principal) {
+        return petService.getBasicPetInfoByPrincipal(principal);
     }
 
-//    @GetMapping("/pets")
-//    public BasicPetInfos findAllUserPets(final Principal principal) {
-//        final UUID userId = userService.findUserUUIDByEmail();
-//        return petService.getBasicPetInfoByUserId();
-//    }
 
-
-    @DeleteMapping("/{userId}/pets/{petId}")
+    @DeleteMapping("/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePetById(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId) {
+    public void deletePetById(@PathVariable("petId") final UUID petId) {
         petService.deletePetById(petId);
     }
 
-    @DeleteMapping("/{userId}/pets")
+    @DeleteMapping("/pets")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAllPets(@PathVariable("userId") final UUID userId) {
-        petService.deleteAllPetsByUserId(userId);
+    public void deleteAllPets(final Principal principal) {
+        petService.deleteAllPetsByPrincipal(principal);
     }
 
-    @PutMapping("/{userId}/pets/{petId}")
+    @PutMapping("/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePet(@PathVariable("petId") final UUID petId, @PathVariable("userId") final UUID userId,
-                          @RequestBody @Valid final Pet pet) {
-        petService.updatePet(userId, petId, pet);
+    public void updatePet(@PathVariable("petId") final UUID petId, @RequestBody @Valid final Pet pet) {
+        petService.updatePet(petId, pet);
     }
 }

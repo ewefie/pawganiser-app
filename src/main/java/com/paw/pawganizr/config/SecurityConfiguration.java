@@ -13,10 +13,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
                 .antMatchers("/api/**").authenticated()
-//                .antMatchers("/api/**").permitAll()
                 .and()
                 .oauth2Login()
-                .defaultSuccessUrl("/api/users/")
+                .defaultSuccessUrl("http://pawganiser.sdacademy.xyz/")
                 .and()
                 .oauth2ResourceServer()
                 .jwt();

@@ -28,22 +28,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
-//    public UUID findUserUUIDByEmail(final Principal principal) {
-//
-////        final Optional<AppUser> appUser = userRepository.findByEmail(email);
-////        if (appUser.isPresent()) {
-////            return appUser.get().getId();
-////        }
-//        throw new ResourceNotFoundException("User not found");
-//    }
-
     public AppUser createOrUpdateUser(final Principal principal) {
         final AppUser user = principalToAppUser(principal);
         final Optional<AppUser> optionalUser = userRepository.findByEmail(user.getEmail());
-        if (optionalUser.isPresent()) {
-            user.setId(optionalUser.get().getId());
-        }
-        return user;
+        return optionalUser.orElseGet(() -> userRepository.save(user));
     }
 
     private AppUser principalToAppUser(final Principal principal) {
@@ -55,6 +43,17 @@ public class UserService {
                 .build();
     }
 
+    public UUID getUserId(final Principal principal) {
+        final Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
+        final String email = (String) attributes.get("email");
+        final Optional<AppUser> optionalAppUser = userRepository.findByEmail(email);
+        if (optionalAppUser.isPresent()) {
+            return optionalAppUser.get().getId();
+        }
+        throw new ResourceNotFoundException();
+    }
+
+
     private Optional<AppUser> findUserById(final UUID id) {
         return userRepository.findById(id);
     }
@@ -64,7 +63,8 @@ public class UserService {
                 new ResourceNotFoundException("User with given id does not exist"));
     }
 
-    public void delete(final UUID id) {
+    public void deleteByPrincipal(final Principal principal) {
+        final UUID id = getUserId(principal);
         userRepository.deleteById(id);
     }
 

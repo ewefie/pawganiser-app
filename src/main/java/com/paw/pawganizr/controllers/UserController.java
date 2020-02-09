@@ -6,9 +6,7 @@ import com.paw.pawganizr.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.security.Principal;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
@@ -20,38 +18,14 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public AppUser createNewUser(@Valid @RequestBody final AppUser user) {
-        return userService.createUser(user);
-    }
-
     @GetMapping("/")
     public AppUser getUserById(final Principal principal) throws ResourceNotFoundException {
         return userService.createOrUpdateUser(principal);
     }
-//
-//    @GetMapping("/{id}")
-//    public AppUser getUserById(@PathVariable(value = "id") final UUID id) throws ResourceNotFoundException {
-//        return userService.findExistingUser(id);
-//    }
 
-    //only for tests
-//    @GetMapping("/")
-//    public List<AppUser> getAllUsers() throws ResourceNotFoundException {
-//        return userService.findAll();
-//    }
-
-    @PutMapping("/{id}")
+    @DeleteMapping("/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updateUser(@PathVariable(value = "id") final UUID id,
-                           @Valid @RequestBody AppUser userDetails) throws ResourceNotFoundException {
-        userService.update(id, userDetails);
-    }
-
-    @DeleteMapping("/{id}")
-    @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(@PathVariable(value = "id") final UUID id) throws ResourceNotFoundException {
-        userService.delete(id);
+    public void deleteUser(Principal principal) throws ResourceNotFoundException {
+        userService.deleteByPrincipal(principal);
     }
 }
