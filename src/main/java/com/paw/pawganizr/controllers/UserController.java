@@ -7,7 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
+import java.security.Principal;
 import java.util.UUID;
 
 @RestController
@@ -26,16 +26,21 @@ public class UserController {
         return userService.createUser(user);
     }
 
-    @GetMapping("/{id}")
-    public AppUser getUserById(@PathVariable(value = "id") final UUID id) throws ResourceNotFoundException {
-        return userService.findExistingUser(id);
+    @GetMapping("/")
+    public AppUser getUserById(final Principal principal) throws ResourceNotFoundException {
+        return userService.createOrUpdateUser(principal);
     }
+//
+//    @GetMapping("/{id}")
+//    public AppUser getUserById(@PathVariable(value = "id") final UUID id) throws ResourceNotFoundException {
+//        return userService.findExistingUser(id);
+//    }
 
     //only for tests
-    @GetMapping("/")
-    public List<AppUser> getAllUsers() throws ResourceNotFoundException {
-        return userService.findAll();
-    }
+//    @GetMapping("/")
+//    public List<AppUser> getAllUsers() throws ResourceNotFoundException {
+//        return userService.findAll();
+//    }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

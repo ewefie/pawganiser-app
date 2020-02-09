@@ -4,10 +4,13 @@ import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.exceptions.UserAlreadyExistsException;
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.repositories.UserRepository;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,6 +26,33 @@ public class UserService {
     public AppUser createUser(final AppUser user) {
         throwIfUserWithGivenEmailExists(user.getEmail());
         return userRepository.save(user);
+    }
+
+//    public UUID findUserUUIDByEmail(final Principal principal) {
+//
+////        final Optional<AppUser> appUser = userRepository.findByEmail(email);
+////        if (appUser.isPresent()) {
+////            return appUser.get().getId();
+////        }
+//        throw new ResourceNotFoundException("User not found");
+//    }
+
+    public AppUser createOrUpdateUser(final Principal principal) {
+        final AppUser user = principalToAppUser(principal);
+        final Optional<AppUser> optionalUser = userRepository.findByEmail(user.getEmail());
+        if (optionalUser.isPresent()) {
+            user.setId(optionalUser.get().getId());
+        }
+        return user;
+    }
+
+    private AppUser principalToAppUser(final Principal principal) {
+        final Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
+        return AppUser.builder()
+                .lastName((String) attributes.get("family_name"))
+                .firstName((String) attributes.get("given_name"))
+                .email((String) attributes.get("email"))
+                .build();
     }
 
     private Optional<AppUser> findUserById(final UUID id) {
