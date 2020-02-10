@@ -26,8 +26,7 @@ public class MedicineService {
         this.userService = userService;
     }
 
-    public Medicine addMedicineToPet(final UUID userId, final UUID petId, final Medicine medicineToAdd) {
-        userService.findExistingUser(userId);
+    public Medicine addMedicineToPet(final UUID petId, final Medicine medicineToAdd) {
         final Pet existingPet = petService.findExistingPetById(petId);
         medicineToAdd.setPet(existingPet);
         return medicineRepository.save(medicineToAdd);
@@ -42,8 +41,8 @@ public class MedicineService {
         medicineRepository.deleteAllByPetId(petId);
     }
 
-    public Medicines findAllMedicinesByPetId(final UUID petId, final UUID userId) {
-        throwIfUserOrPetDoesNotExist(userId, petId);
+    public Medicines findAllMedicinesByPetId(final UUID petId) {
+        throwIfPetDoesNotExist(petId);
         return new Medicines(medicineRepository.findAllByPetId(petId));
     }
 
@@ -51,15 +50,15 @@ public class MedicineService {
         return medicineRepository.findById(medicineId);
     }
 
-    public Medicine findExistingMedicineById(final UUID medicineId, UUID petId, UUID userId) {
-        throwIfUserOrPetDoesNotExist(userId, petId);
+    public Medicine findExistingMedicineById(final UUID medicineId, UUID petId) {
+        throwIfPetDoesNotExist(petId);
         return findMedicineById(medicineId).orElseThrow(() ->
                 new ResourceNotFoundException("Medicine with given id does not exist."));
     }
 
-    private void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
+
+    private void throwIfPetDoesNotExist(final UUID petId) {
         petService.findExistingPetById(petId);
-        userService.findExistingUser(userId);
     }
 
     public Medicine updateMedicine(final UUID medicineId, final Medicine medicine) {

@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class TreatmentController {
 
     private final TreatmentService treatmentService;
@@ -19,49 +20,49 @@ public class TreatmentController {
         this.treatmentService = treatmentService;
     }
 
-    @GetMapping("/{userId}/pets/{petId}/treatments/{treatmentId}")
-    public Treatment findById(@PathVariable(name = "userId") final UUID userId,
-                              @PathVariable(name = "petId") final UUID petId,
-                              @PathVariable(name = "treatmentId") final UUID treatmentId) {
-        return treatmentService.findExistingTreatmentById(treatmentId, petId, userId);
+    @GetMapping("pets/{petId}/treatments/{treatmentId}")
+    public Treatment findById(
+            @PathVariable(name = "petId") final UUID petId,
+            @PathVariable(name = "treatmentId") final UUID treatmentId) {
+        return treatmentService.findExistingTreatmentById(treatmentId, petId);
     }
 
-    @GetMapping("/{userId}/pets/{petId}/treatments")
-    public Treatments findAll(@PathVariable(name = "userId") final UUID userId,
-                              @PathVariable(name = "petId") final UUID petId) {
-        return treatmentService.findAllTreatmentsByPetId(petId, userId);
+    @GetMapping("pets/{petId}/treatments")
+    public Treatments findAll(
+            @PathVariable(name = "petId") final UUID petId) {
+        return treatmentService.findAllTreatmentsByPetId(petId);
     }
 
-    @PostMapping("/{userId}/pets/{petId}/treatments")
+    @PostMapping("pets/{petId}/treatments")
     @ResponseStatus(HttpStatus.CREATED)
-    public Treatment create(@PathVariable(name = "userId") final UUID userId,
-                            @PathVariable(name = "petId") final UUID petId,
-                            @RequestBody @Valid final Treatment treatment) {
-        return treatmentService.addTreatmentToPet(userId, petId, treatment);
+    public Treatment create(
+            @PathVariable(name = "petId") final UUID petId,
+            @RequestBody @Valid final Treatment treatment) {
+        return treatmentService.addTreatmentToPet(petId, treatment);
     }
 
-    @PutMapping("/{userId}/pets/{petId}/treatments/{treatmentId}")
+    @PutMapping("pets/{petId}/treatments/{treatmentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Treatment update(@PathVariable(name = "userId") final UUID userId,
-                            @PathVariable(name = "petId") final UUID petId,
-                            @PathVariable(name = "treatmentId") final UUID treatmentId,
-                            @RequestBody @Valid final Treatment treatment) {
+    public Treatment update(
+            @PathVariable(name = "petId") final UUID petId,
+            @PathVariable(name = "treatmentId") final UUID treatmentId,
+            @RequestBody @Valid final Treatment treatment) {
         return treatmentService.updateTreatment(treatmentId, treatment);
     }
 
 
-    @DeleteMapping("/{userId}/pets/{petId}/treatments/{treatmentId}")
+    @DeleteMapping("pets/{petId}/treatments/{treatmentId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable(name = "userId") final UUID userId,
-                           @PathVariable(name = "petId") final UUID petId,
-                           @PathVariable(name = "treatmentId") final UUID treatmentId) {
+    public void deleteById(
+            @PathVariable(name = "petId") final UUID petId,
+            @PathVariable(name = "treatmentId") final UUID treatmentId) {
         treatmentService.deleteById(treatmentId);
     }
 
-    @DeleteMapping("/{userId}/pets/{petId}/treatments")
+    @DeleteMapping("pets/{petId}/treatments")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAll(@PathVariable(name = "userId") final UUID userId,
-                          @PathVariable(name = "petId") final UUID petId) {
+    public void deleteAll(
+            @PathVariable(name = "petId") final UUID petId) {
         treatmentService.deleteAllTreatments(petId);
     }
 }

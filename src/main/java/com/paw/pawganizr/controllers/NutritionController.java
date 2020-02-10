@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class NutritionController {
 
     private final NutritionService nutritionService;
@@ -20,49 +21,43 @@ public class NutritionController {
     }
 
 
-    @GetMapping("/{userId}/pets/{petId}/nutrients/{nutritionId}")
-    public Nutrition findById(@PathVariable(name = "userId") final UUID userId,
-                              @PathVariable(name = "petId") final UUID petId,
+    @GetMapping("/pets/{petId}/nutrients/{nutritionId}")
+    public Nutrition findById(@PathVariable(name = "petId") final UUID petId,
                               @PathVariable(name = "nutritionId") final UUID nutritionId) {
-        return nutritionService.findExistingNutritionById(nutritionId, petId, userId);
+        return nutritionService.findExistingNutritionById(nutritionId, petId);
     }
 
-    @GetMapping("/{userId}/pets/{petId}/nutrients")
-    public Nutrients findAll(@PathVariable(name = "userId") final UUID userId,
-                             @PathVariable(name = "petId") final UUID petId) {
-        return nutritionService.findAllnutrientsByPetId(petId, userId);
+    @GetMapping("/pets/{petId}/nutrients")
+    public Nutrients findAll(@PathVariable(name = "petId") final UUID petId) {
+        return nutritionService.findAllNutrientsByPetId(petId);
     }
 
-    @PostMapping("/{userId}/pets/{petId}/nutrients")
+    @PostMapping("/pets/{petId}/nutrients")
     @ResponseStatus(HttpStatus.CREATED)
-    public Nutrition create(@PathVariable(name = "userId") final UUID userId,
-                            @PathVariable(name = "petId") final UUID petId,
+    public Nutrition create(@PathVariable(name = "petId") final UUID petId,
                             @RequestBody @Valid final Nutrition nutrition) {
-        return nutritionService.addNutritionToPet(userId, petId, nutrition);
+        return nutritionService.addNutritionToPet(petId, nutrition);
     }
 
-    @PutMapping("/{userId}/pets/{petId}/nutrients/{nutritionId}")
+    @PutMapping("/pets/{petId}/nutrients/{nutritionId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Nutrition update(@PathVariable(name = "userId") final UUID userId,
-                            @PathVariable(name = "petId") final UUID petId,
+    public Nutrition update(@PathVariable(name = "petId") final UUID petId,
                             @PathVariable(name = "nutritionId") final UUID nutritionId,
                             @RequestBody @Valid final Nutrition nutrition) {
-        return nutritionService.updateNutrition(userId, petId, nutritionId, nutrition);
+        return nutritionService.updateNutrition(petId, nutritionId, nutrition);
     }
 
 
-    @DeleteMapping("/{userId}/pets/{petId}/nutrients/{nutritionId}")
+    @DeleteMapping("/pets/{petId}/nutrients/{nutritionId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable(name = "userId") final UUID userId,
-                           @PathVariable(name = "petId") final UUID petId,
+    public void deleteById(@PathVariable(name = "petId") final UUID petId,
                            @PathVariable(name = "nutritionId") final UUID nutritionId) {
         nutritionService.deleteById(nutritionId);
     }
 
-    @DeleteMapping("/{userId}/pets/{petId}/nutrients")
+    @DeleteMapping("/pets/{petId}/nutrients")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAll(@PathVariable(name = "userId") final UUID userId,
-                          @PathVariable(name = "petId") final UUID petId) {
-        nutritionService.deleteAllnutrients(petId, userId);
+    public void deleteAll(@PathVariable(name = "petId") final UUID petId) {
+        nutritionService.deleteAllNutrients(petId);
     }
 }

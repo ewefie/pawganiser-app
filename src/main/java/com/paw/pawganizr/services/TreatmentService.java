@@ -25,8 +25,7 @@ public class TreatmentService {
         this.treatmentRepository = treatmentRepository;
     }
 
-    public Treatment addTreatmentToPet(final UUID userId, final UUID petId, final Treatment treatmentToAdd) {
-        userService.findExistingUser(userId);
+    public Treatment addTreatmentToPet(final UUID petId, final Treatment treatmentToAdd) {
         final Pet existingPet = petService.findExistingPetById(petId);
         treatmentToAdd.setPet(existingPet);
         return treatmentRepository.save(treatmentToAdd);
@@ -42,8 +41,8 @@ public class TreatmentService {
         return treatmentRepository.save(updatedTreatment);
     }
 
-    public Treatment findExistingTreatmentById(final UUID treatmentId, final UUID petId, final UUID userId) {
-        petService.throwIfUserOrPetDoesNotExist(userId, petId);
+    public Treatment findExistingTreatmentById(final UUID treatmentId, final UUID petId) {
+        petService.throwIfPetDoesNotExist(petId);
         return findTreatmentById(treatmentId).orElseThrow(() -> new ResourceNotFoundException("Treatment with given id does not exist"));
     }
 
@@ -51,8 +50,8 @@ public class TreatmentService {
         return treatmentRepository.findById(id);
     }
 
-    public Treatments findAllTreatmentsByPetId(final UUID petId, final UUID userId) {
-        petService.throwIfUserOrPetDoesNotExist(userId, petId);
+    public Treatments findAllTreatmentsByPetId(final UUID petId) {
+        petService.throwIfPetDoesNotExist(petId);
         return new Treatments(treatmentRepository.findAllByPetId(petId));
     }
 

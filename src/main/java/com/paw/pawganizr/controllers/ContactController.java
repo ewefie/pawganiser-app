@@ -7,10 +7,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class ContactController {
 
     private final ContactService contactService;
@@ -19,42 +21,42 @@ public class ContactController {
         this.contactService = contactService;
     }
 
-    @GetMapping("/{userId}/contacts")
-    public Contacts findAllContacts(@PathVariable(name = "userId") final UUID userId) {
-        return contactService.findAllContactsByUserId(userId);
+    @GetMapping("/contacts")
+    public Contacts findAllContacts(final Principal principal) {
+        return contactService.findAllContactsByPrincipal(principal);
     }
 
-    @GetMapping("/{userId}/contacts/{contactId}")
-    public Contact findContact(@PathVariable(name = "userId") final UUID userId,
-                               @PathVariable(name = "contactId") final UUID contactId) {
-        return contactService.findExistingContact(userId, contactId);
+    @GetMapping("/contacts/{contactId}")
+    public Contact findContact(
+            @PathVariable(name = "contactId") final UUID contactId,
+            final Principal principal) {
+        return contactService.findExistingContact(contactId);
     }
 
-    @PostMapping("/{userId}/contacts")
+    @PostMapping("/contacts")
     @ResponseStatus(HttpStatus.CREATED)
     public Contact createContact(@Valid @RequestBody final Contact contact,
-                                 @PathVariable("userId") final UUID userId) {
-        return contactService.createContact(userId, contact);
+                                 final Principal principal) {
+        return contactService.createContact(contact, principal);
     }
 
-    @DeleteMapping("/{userId}/contacts/{contactId}")
+    @DeleteMapping("/contacts/{contactId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteContactById(@PathVariable("contactId") final UUID contactId,
-                                  @PathVariable("userId") final UUID userId) {
-        contactService.deleteById(contactId, userId);
+                                  final Principal principal) {
+        contactService.deleteById(contactId);
     }
 
-    @DeleteMapping("/{userId}/contacts")
+    @DeleteMapping("/contacts")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAllContacts(@PathVariable("userId") final UUID userId) {
-        contactService.deleteAllByUserId(userId);
+    public void deleteAllContacts(final Principal principal) {
+        contactService.deleteAllByPrincipal(principal);
     }
 
-    @PutMapping("/{userId}/contacts/{contactId}")
+    @PutMapping("/contacts/{contactId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateContact(@PathVariable("contactId") final UUID contactId,
-                              @PathVariable("userId") final UUID userId,
-                              @RequestBody @Valid Contact updatedContact) {
-        contactService.updateContact(userId, contactId, updatedContact);
+                              @RequestBody @Valid Contact updatedContact, final Principal principal) {
+        contactService.updateContact(contactId, updatedContact);
     }
 }

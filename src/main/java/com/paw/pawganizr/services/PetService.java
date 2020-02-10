@@ -51,11 +51,6 @@ public class PetService {
         petRepository.deleteAllByOwnerId(userId);
     }
 
-    public void deleteAllPetsByUserId(final UUID userId) {
-        userService.findExistingUser(userId);
-        petRepository.deleteAllByOwnerId(userId);
-    }
-
     private List<Pet> findAllPetsByPrincipal(final Principal principal) {
         final UUID userId = userService.getUserId(principal);
         final AppUser existingUser = userService.findExistingUser(userId);
@@ -79,8 +74,12 @@ public class PetService {
         return petRepository.save(updatedPet);
     }
 
-    public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
+//    public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
+//        findExistingPetById(petId);
+//        userService.findExistingUser(userId);
+//    }
+
+    public void throwIfPetDoesNotExist(final UUID petId) {
         findExistingPetById(petId);
-        userService.findExistingUser(userId);
     }
 }

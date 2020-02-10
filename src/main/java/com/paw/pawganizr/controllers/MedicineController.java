@@ -11,6 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class MedicineController {
 
     private final MedicineService medicineService;
@@ -19,49 +20,43 @@ public class MedicineController {
         this.medicineService = medicineService;
     }
 
-    @GetMapping("/{userId}/pets/{petId}/medicines/{medicineId}")
-    public Medicine findById(@PathVariable(name = "userId") final UUID userId,
-                             @PathVariable(name = "petId") final UUID petId,
+    @GetMapping("/pets/{petId}/medicines/{medicineId}")
+    public Medicine findById(@PathVariable(name = "petId") final UUID petId,
                              @PathVariable(name = "medicineId") final UUID medicineId) {
-        return medicineService.findExistingMedicineById(medicineId, petId, userId);
+        return medicineService.findExistingMedicineById(medicineId, petId);
     }
 
-    @GetMapping("/{userId}/pets/{petId}/medicines")
-    public Medicines findAll(@PathVariable(name = "userId") final UUID userId,
-                             @PathVariable(name = "petId") final UUID petId) {
-        return medicineService.findAllMedicinesByPetId(petId, userId);
+    @GetMapping("/pets/{petId}/medicines")
+    public Medicines findAll(@PathVariable(name = "petId") final UUID petId) {
+        return medicineService.findAllMedicinesByPetId(petId);
     }
 
-    @PostMapping("/{userId}/pets/{petId}/medicines")
+    @PostMapping("/pets/{petId}/medicines")
     @ResponseStatus(HttpStatus.CREATED)
-    public Medicine create(@PathVariable(name = "userId") final UUID userId,
-                           @PathVariable(name = "petId") final UUID petId,
+    public Medicine create(@PathVariable(name = "petId") final UUID petId,
                            @RequestBody @Valid final Medicine medicine) {
-        return medicineService.addMedicineToPet(userId, petId, medicine);
+        return medicineService.addMedicineToPet(petId, medicine);
     }
 
-    @PutMapping("/{userId}/pets/{petId}/medicines/{medicineId}")
+    @PutMapping("/pets/{petId}/medicines/{medicineId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public Medicine update(@PathVariable(name = "userId") final UUID userId,
-                           @PathVariable(name = "petId") final UUID petId,
+    public Medicine update(@PathVariable(name = "petId") final UUID petId,
                            @PathVariable(name = "medicineId") final UUID medicineId,
                            @RequestBody @Valid final Medicine medicine) {
         return medicineService.updateMedicine(medicineId, medicine);
     }
 
 
-    @DeleteMapping("/{userId}/pets/{petId}/medicines/{medicineId}")
+    @DeleteMapping("/pets/{petId}/medicines/{medicineId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteById(@PathVariable(name = "userId") final UUID userId,
-                           @PathVariable(name = "petId") final UUID petId,
+    public void deleteById(@PathVariable(name = "petId") final UUID petId,
                            @PathVariable(name = "medicineId") final UUID medicineId) {
         medicineService.deleteById(medicineId);
     }
 
-    @DeleteMapping("/{userId}/pets/{petId}/medicines")
+    @DeleteMapping("/pets/{petId}/medicines")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAll(@PathVariable(name = "userId") final UUID userId,
-                          @PathVariable(name = "petId") final UUID petId) {
+    public void deleteAll(@PathVariable(name = "petId") final UUID petId) {
         medicineService.deleteAllMedicines(petId);
     }
 }

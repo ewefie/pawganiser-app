@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class PetController {
 
     private final PetService petService;
@@ -35,7 +36,6 @@ public class PetController {
     public BasicPetInfos findAllUsersPets(final Principal principal) {
         return petService.getBasicPetInfoByPrincipal(principal);
     }
-
 
     @DeleteMapping("/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)

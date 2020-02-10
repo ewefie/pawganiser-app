@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.security.Principal;
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +25,11 @@ public class UserService {
     public AppUser createUser(final AppUser user) {
         throwIfUserWithGivenEmailExists(user.getEmail());
         return userRepository.save(user);
+    }
+
+    public AppUser getUserByPrincipal(final Principal principal) {
+        final UUID id = getUserId(principal);
+        return findExistingUser(id);
     }
 
     public AppUser createOrUpdateUser(final Principal principal) {
@@ -66,17 +70,6 @@ public class UserService {
     public void deleteByPrincipal(final Principal principal) {
         final UUID id = getUserId(principal);
         userRepository.deleteById(id);
-    }
-
-    public AppUser update(final UUID id, final AppUser user) {
-        findExistingUser(id);
-        user.setId(id);
-        return userRepository.save(user);
-    }
-
-    //only for tests
-    public List<AppUser> findAll() {
-        return userRepository.findAll();
     }
 
     private void throwIfUserWithGivenEmailExists(final String email) {

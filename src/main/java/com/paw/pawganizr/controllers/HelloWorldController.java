@@ -25,6 +25,7 @@ public class HelloWorldController {
         final Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
         final String fullName = (String) attributes.get("name");
         final String email = (String) attributes.get("email");
-        return userService.createOrUpdateUser(principal).toString();
+//        return userService.createOrUpdateUser(principal).toString();
+        return principal.toString();
     }
 }

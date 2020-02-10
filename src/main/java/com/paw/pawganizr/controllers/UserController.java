@@ -10,6 +10,7 @@ import java.security.Principal;
 
 @RestController
 @RequestMapping("/api/users")
+@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class UserController {
 
     private final UserService userService;
@@ -19,7 +20,7 @@ public class UserController {
     }
 
     @GetMapping("/")
-    public AppUser getUserById(final Principal principal) throws ResourceNotFoundException {
+    public AppUser getUserByPrincipalData(final Principal principal) throws ResourceNotFoundException {
         return userService.createOrUpdateUser(principal);
     }
 

@@ -8,6 +8,7 @@ import com.paw.pawganizr.repositories.ContactRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -23,24 +24,22 @@ public class ContactService {
         this.userService = userService;
     }
 
-    public Contact createContact(final UUID appUserId, final Contact contact) {
-        final AppUser existingUser = userService.findExistingUser(appUserId);
+    public Contact createContact(final Contact contact, final Principal principal) {
+        final AppUser existingUser = userService.getUserByPrincipal(principal);
         contact.setUser(existingUser);
         return contactRepository.save(contact);
     }
 
-    public void deleteById(final UUID contactId, final UUID appUserId) {
-        userService.findExistingUser(appUserId);
+    public void deleteById(final UUID contactId) {
         contactRepository.deleteById(contactId);
     }
 
-    public Contacts findAllContactsByUserId(final UUID appUserId) {
-        final AppUser existingUser = userService.findExistingUser(appUserId);
+    public Contacts findAllContactsByPrincipal(final Principal principal) {
+        final AppUser existingUser = userService.getUserByPrincipal(principal);
         return new Contacts(contactRepository.findAllByUser(existingUser));
     }
 
-    public Contact updateContact(final UUID appUserId, UUID contactId, final Contact updatedContact) {
-        findExistingContact(appUserId, contactId);
+    public Contact updateContact(final UUID contactId, final Contact updatedContact) {
         updatedContact.setId(contactId);
         return contactRepository.save(updatedContact);
     }
@@ -50,13 +49,12 @@ public class ContactService {
         return contactRepository.findById(contactId);
     }
 
-    public Contact findExistingContact(final UUID userId, final UUID contactId) {
-        userService.findExistingUser(userId);
+    public Contact findExistingContact(final UUID contactId) {
         return findContactById(contactId).orElseThrow(() -> new ResourceNotFoundException("Contact with given id does not exist"));
     }
 
-    public void deleteAllByUserId(final UUID userId) {
-        userService.findExistingUser(userId);
+    public void deleteAllByPrincipal(final Principal principal) {
+        final UUID userId = userService.getUserId(principal);
         contactRepository.deleteAllByUserId(userId);
     }
 }

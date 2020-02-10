@@ -25,15 +25,14 @@ public class NutritionService {
         this.nutritionRepository = nutritionRepository;
     }
 
-    public Nutrition addNutritionToPet(final UUID userId, final UUID petId, final Nutrition nutrition) {
-        userService.findExistingUser(userId);
+    public Nutrition addNutritionToPet(final UUID petId, final Nutrition nutrition) {
         final Pet existingPet = petService.findExistingPetById(petId);
         nutrition.setPet(existingPet);
         return nutritionRepository.save(nutrition);
     }
 
-    public Nutrition updateNutrition(final UUID userId, final UUID petId, final UUID nutritionId, final Nutrition updatedNutrition) {
-        findExistingNutritionById(nutritionId, petId, userId);
+    public Nutrition updateNutrition(final UUID petId, final UUID nutritionId, final Nutrition updatedNutrition) {
+        findExistingNutritionById(nutritionId, petId);
         updatedNutrition.setId(nutritionId);
         return nutritionRepository.save(updatedNutrition);
     }
@@ -42,22 +41,27 @@ public class NutritionService {
         nutritionRepository.deleteById(id);
     }
 
-    public void deleteAllnutrients(final UUID petId, final UUID userId) {
-        petService.throwIfUserOrPetDoesNotExist(userId, petId);
+    public void deleteAllNutrients(final UUID petId) {
+        petService.throwIfPetDoesNotExist(petId);
         nutritionRepository.deleteAllByPetId(petId);
     }
 
     public Optional<Nutrition> findById(final UUID id) {
         return nutritionRepository.findById(id);
     }
+//
+//    public Nutrition findExistingNutritionById(final UUID nutritionId, final UUID petId, final UUID userId) {
+//        petService.throwIfUserOrPetDoesNotExist(userId, petId);
+//        return findById(nutritionId).orElseThrow(() -> new ResourceNotFoundException("Nutrition with given id does not exist"));
+//    }
 
-    public Nutrition findExistingNutritionById(final UUID nutritionId, final UUID petId, final UUID userId) {
-        petService.throwIfUserOrPetDoesNotExist(userId, petId);
+    public Nutrition findExistingNutritionById(final UUID nutritionId, final UUID petId) {
+        petService.throwIfPetDoesNotExist(petId);
         return findById(nutritionId).orElseThrow(() -> new ResourceNotFoundException("Nutrition with given id does not exist"));
     }
 
-    public Nutrients findAllnutrientsByPetId(final UUID petId, final UUID userId) {
-        petService.throwIfUserOrPetDoesNotExist(userId, petId);
+    public Nutrients findAllNutrientsByPetId(final UUID petId) {
+        petService.throwIfPetDoesNotExist(petId);
         return new Nutrients(nutritionRepository.findAllByPetId(petId));
     }
 }
