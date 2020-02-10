@@ -1,1 +1,2 @@
 e:W9XqG,#"JxUAZ6
+jdbc:sqlserver://pawganizer.database.windows.net:1433;database=pawganizer;user=ewefie@pawganizer;password=Something82!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;
