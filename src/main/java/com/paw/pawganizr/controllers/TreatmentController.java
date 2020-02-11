@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
+@CrossOrigin(origins = {"http://localhost:4200", "http://pawganiser.sdacademy.xyz"})
 public class TreatmentController {
 
     private final TreatmentService treatmentService;
