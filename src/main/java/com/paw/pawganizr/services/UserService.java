@@ -54,7 +54,7 @@ public class UserService {
         if (optionalAppUser.isPresent()) {
             return optionalAppUser.get().getId();
         }
-        throw new ResourceNotFoundException();
+        throw new ResourceNotFoundException("");
     }
 
 
@@ -77,5 +77,13 @@ public class UserService {
                 .ifPresent(pl -> {
                     throw new UserAlreadyExistsException("User with given email already exists");
                 });
+    }
+
+    public boolean existsByEmail(final String email) {
+        return userRepository.existsByEmail(email);
+    }
+
+    public Optional<AppUser> findById(final UUID id) {
+        return userRepository.findById(id);
     }
 }
