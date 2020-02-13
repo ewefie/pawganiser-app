@@ -1,9 +1,12 @@
 package com.paw.pawganizr.controllers;
 
 import com.paw.pawganizr.models.Pet;
+import com.paw.pawganizr.security.CurrentUser;
+import com.paw.pawganizr.security.UserPrincipal;
 import com.paw.pawganizr.services.PetService;
 import com.paw.pawganizr.wrappers.BasicPetInfos;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,35 +26,41 @@ public class PetController {
 
     @PostMapping("/pets")
     @ResponseStatus(HttpStatus.CREATED)
-    public Pet createPet(@Valid @RequestBody final Pet pet, final Principal principal) {
-        return petService.addPetToUser(pet, principal);
+    @PreAuthorize("hasRole('USER')")
+    public Pet createPet(@Valid @RequestBody final Pet pet, @CurrentUser final UserPrincipal principal) {
+        return petService.addPetToUser(pet, principal.getId());
     }
 
     @GetMapping("/pets/{petId}")
-    public Pet findPetById(@PathVariable("petId") final UUID petId) {
+    @PreAuthorize("hasRole('USER')")
+    public Pet findPetById(@PathVariable("petId") final UUID petId, @CurrentUser final UserPrincipal principal) {
         return petService.findExistingPetById(petId);
     }
 
     @GetMapping("/pets")
-    public BasicPetInfos findAllUsersPets(final Principal principal) {
-        return petService.getBasicPetInfoByPrincipal(principal);
+    @PreAuthorize("hasRole('USER')")
+    public BasicPetInfos findAllUsersPets(@CurrentUser final UserPrincipal principal) {
+        return petService.getBasicPetInfoByUserId(principal.getId());
     }
 
     @DeleteMapping("/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deletePetById(@PathVariable("petId") final UUID petId) {
+    @PreAuthorize("hasRole('USER')")
+    public void deletePetById(@PathVariable("petId") final UUID petId, @CurrentUser final UserPrincipal principal) {
         petService.deletePetById(petId);
     }
 
     @DeleteMapping("/pets")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteAllPets(final Principal principal) {
-        petService.deleteAllPetsByPrincipal(principal);
+    @PreAuthorize("hasRole('USER')")
+    public void deleteAllPets(@CurrentUser final UserPrincipal principal) {
+        petService.deleteAllPetsByUserId(principal.getId());
     }
 
     @PutMapping("/pets/{petId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePet(@PathVariable("petId") final UUID petId, @RequestBody @Valid final Pet pet) {
+    @PreAuthorize("hasRole('USER')")
+    public void updatePet(@PathVariable("petId") final UUID petId, @RequestBody @Valid final Pet pet, @CurrentUser final UserPrincipal principal) {
         petService.updatePet(petId, pet);
     }
 }

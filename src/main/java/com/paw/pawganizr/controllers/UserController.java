@@ -29,11 +29,6 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 
-    @GetMapping("/")
-    public AppUser getUserByPrincipalData(final Principal principal) throws ResourceNotFoundException {
-        return userService.createOrUpdateUser(principal);
-    }
-
     @DeleteMapping("/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(final Principal principal) throws ResourceNotFoundException {

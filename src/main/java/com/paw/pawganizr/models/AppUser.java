@@ -42,14 +42,9 @@ public class AppUser {
      * mandatory for creating new account:
      */
     @NotNull
-    @Length(min = 2, message = "First name has to be at at least 2 character long")
-    @Column(name = "first_name")
-    private String firstName;
-
-    @NotNull
-    @Length(min = 2, message = "Last name has to be at at least 2 character long")
-    @Column(name = "last_name")
-    private String lastName;
+    @Length(min = 2, message = "Name has to be at at least 2 character long")
+    @Column(name = "name")
+    private String name;
 
     @NotNull
     @Column(name = "email", updatable = false)

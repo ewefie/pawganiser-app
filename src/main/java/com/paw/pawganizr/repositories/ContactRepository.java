@@ -14,7 +14,8 @@ import java.util.UUID;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, UUID> {
 
-    List<Contact> findAllByUser(final AppUser user);
+//    List<Contact> findAllByUser(final AppUser user);
+    List<Contact> findAllByUserId(UUID userId);
 
 
     @Query("select c from contacts c where c.user.id = :ownerId")

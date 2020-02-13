@@ -41,8 +41,7 @@ public class UserService {
     private AppUser principalToAppUser(final Principal principal) {
         final Map<String, Object> attributes = ((OAuth2AuthenticationToken) principal).getPrincipal().getAttributes();
         return AppUser.builder()
-                .lastName((String) attributes.get("family_name"))
-                .firstName((String) attributes.get("given_name"))
+                .name((String) attributes.get("family_name"))
                 .email((String) attributes.get("email"))
                 .build();
     }

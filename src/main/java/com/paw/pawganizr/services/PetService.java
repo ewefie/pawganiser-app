@@ -31,6 +31,44 @@ public class PetService {
         this.mapper = mapper;
     }
 
+    public Pet addPetToUser(final Pet pet, final UUID id) {
+        final AppUser existingUser = userService.findExistingUser(id);
+        pet.setOwner(existingUser);
+        return petRepository.save(pet);
+    }
+
+    public void deleteAllPetsByUserId(final UUID userId) {
+        userService.findExistingUser(userId);
+        petRepository.deleteAllByOwnerId(userId);
+    }
+
+    private List<Pet> findAllPetsByUserId(final UUID appUserId) {
+        final AppUser existingUser = userService.findExistingUser(appUserId);
+        return petRepository.findAllByOwner(existingUser);
+    }
+
+    public BasicPetInfos getBasicPetInfoByUserId(final UUID id) {
+        final List<BasicPetInfo> petInfos = findAllPetsByUserId(id).stream()
+                .map(mapper::mapPetToBasicPetInfo)
+                .collect(Collectors.toList());
+        return new BasicPetInfos(petInfos);
+    }
+
+    public Pet findExistingPetById(final UUID petId) {
+        return findPetById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet with given id does not exist"));
+    }
+
+    public Pet updatePet(final UUID userId, final UUID petId, final Pet updatedPet) {
+        throwIfUserOrPetDoesNotExist(userId, petId);
+        updatedPet.setId(petId);
+        return petRepository.save(updatedPet);
+    }
+
+    public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
+        findExistingPetById(petId);
+        userService.findExistingUser(userId);
+    }
+
     public Pet addPetToUser(final Pet pet, final Principal principal) {
         final UUID id = userService.getUserId(principal);
         final AppUser existingUser = userService.findExistingUser(id);
@@ -62,11 +100,6 @@ public class PetService {
                 .map(mapper::mapPetToBasicPetInfo)
                 .collect(Collectors.toList());
         return new BasicPetInfos(petInfos);
-    }
-
-
-    public Pet findExistingPetById(final UUID petId) {
-        return findPetById(petId).orElseThrow(() -> new ResourceNotFoundException("Pet with given id does not exist"));
     }
 
     public Pet updatePet(final UUID petId, final Pet updatedPet) {
