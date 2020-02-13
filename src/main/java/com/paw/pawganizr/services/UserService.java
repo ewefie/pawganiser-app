@@ -27,6 +27,10 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public void deleteByUserId(UUID id) {
+        userRepository.deleteById(id);
+    }
+
     public AppUser getUserByPrincipal(final Principal principal) {
         final UUID id = getUserId(principal);
         return findExistingUser(id);

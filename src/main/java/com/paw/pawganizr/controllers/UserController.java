@@ -31,7 +31,7 @@ public class UserController {
 
     @DeleteMapping("/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void deleteUser(final Principal principal) throws ResourceNotFoundException {
-        userService.deleteByPrincipal(principal);
+    public void deleteUser(@CurrentUser final UserPrincipal principal) throws ResourceNotFoundException {
+        userService.deleteByUserId(principal.getId());
     }
 }
