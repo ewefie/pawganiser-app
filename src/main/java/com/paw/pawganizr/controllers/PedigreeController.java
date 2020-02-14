@@ -5,10 +5,10 @@ import com.paw.pawganizr.services.PedigreeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.UUID;
 
-@RestController("/api/users")
+@RestController
+@RequestMapping("/api/users")
 public class PedigreeController {
 
     private final PedigreeService pedigreeService;
@@ -18,7 +18,6 @@ public class PedigreeController {
     }
 
     @GetMapping("/pets/{petId}/pedigree")
-    @ResponseStatus(HttpStatus.CREATED)
     public Pedigree getPetsPedigree(@PathVariable(name = "petId") final UUID petId) {
         return pedigreeService.findExistingPedigree(petId);
     }
@@ -30,13 +29,14 @@ public class PedigreeController {
     }
 
     @PostMapping("/pets/{petId}/pedigree")
-    public Pedigree addPetsPedigree(@PathVariable(name = "petId") final UUID petId, @RequestBody @Valid final Pedigree pedigree) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public Pedigree addPetsPedigree(@PathVariable(name = "petId") final UUID petId, @RequestBody final Pedigree pedigree) {
         return pedigreeService.addPedigree(petId, pedigree);
     }
 
     @PutMapping("/pets/{petId}/pedigree")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePetsPedigree(@PathVariable(name = "petId") final UUID petId, @RequestBody @Valid final Pedigree pedigree) {
-         pedigreeService.updatePedigree(petId, pedigree);
+    public void updatePetsPedigree(@PathVariable(name = "petId") final UUID petId, @RequestBody final Pedigree pedigree) {
+        pedigreeService.updatePedigree(petId, pedigree);
     }
 }

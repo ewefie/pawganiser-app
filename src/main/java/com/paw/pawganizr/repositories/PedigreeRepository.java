@@ -14,5 +14,4 @@ public interface PedigreeRepository extends JpaRepository<Pedigree, UUID> {
 
     Optional<Pedigree> findByPetId(UUID petId);
 
-
 }
