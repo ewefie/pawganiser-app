@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.UUID;
 
-@RestController("/api/users/")
+@RestController("/api/users")
 public class PedigreeController {
 
     private final PedigreeService pedigreeService;
