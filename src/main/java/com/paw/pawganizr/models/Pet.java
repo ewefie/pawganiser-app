@@ -105,8 +105,8 @@ public class Pet {
     @Column(name = "race")
     private String race;
 
-    @OneToOne(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "pedigree_id")
+    @JsonIgnore
+    @OneToOne(mappedBy = "pet")
     private Pedigree pedigree;
 
     @AssertTrue
