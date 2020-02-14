@@ -39,6 +39,7 @@ public class Pedigree {
     @Column(name = "father_name")
     private String fatherName;
 
+    @OneToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
 }

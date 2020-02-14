@@ -1,11 +1,13 @@
 package com.paw.pawganizr.services;
 
+import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.models.Pedigree;
 import com.paw.pawganizr.models.Pet;
 import com.paw.pawganizr.repositories.PedigreeRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -21,7 +23,7 @@ public class PedigreeService {
         this.petService = petService;
     }
 
-    public Pedigree findPedigree(final UUID petId) {
+    public Optional<Pedigree> findPedigree(final UUID petId) {
         return pedigreeRepository.findByPetId(petId);
     }
 
@@ -35,13 +37,17 @@ public class PedigreeService {
         return pedigreeRepository.save(pedigree);
     }
 
-    public Pedigree updatePedigree(final UUID petId, final Pedigree pedigree) {
+    public void updatePedigree(final UUID petId, final Pedigree pedigree) {
         Pet pet = petService.findExistingPetById(petId);
         Pedigree oldPedigree = pet.getPedigree();
         oldPedigree.setBreeder(pedigree.getBreeder());
         oldPedigree.setFatherName(pedigree.getFatherName());
         oldPedigree.setMotherName(pedigree.getMotherName());
         oldPedigree.setPedigreeNum(pedigree.getPedigreeNum());
-        return pedigreeRepository.save(oldPedigree);
+        pedigreeRepository.save(oldPedigree);
+    }
+
+    public Pedigree findExistingPedigree(final UUID petId) {
+        return findPedigree(petId).orElseThrow(() -> new ResourceNotFoundException("Pet does not have pedigree yet."));
     }
 }
