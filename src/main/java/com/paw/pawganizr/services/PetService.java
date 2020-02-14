@@ -103,8 +103,9 @@ public class PetService {
     }
 
     public Pet updatePet(final UUID petId, final Pet updatedPet) {
-        updatedPet.setId(petId);
-        return petRepository.save(updatedPet);
+        final Pet existingPet = findExistingPetById(petId);
+        existingPet.setName(updatedPet.getName());
+        return petRepository.save(existingPet);
     }
 
 //    public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
