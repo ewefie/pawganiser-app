@@ -24,7 +24,7 @@ public class TreatmentController {
     public Treatment findById(
             @PathVariable(name = "petId") final UUID petId,
             @PathVariable(name = "treatmentId") final UUID treatmentId) {
-        return treatmentService.findExistingTreatmentById(treatmentId, petId);
+        return treatmentService.findExistingTreatmentById(treatmentId);
     }
 
     @GetMapping("pets/{petId}/treatments")

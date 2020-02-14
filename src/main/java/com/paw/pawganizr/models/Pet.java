@@ -118,6 +118,6 @@ public class Pet {
     @AssertTrue
     @JsonIgnore
     private boolean isChipNumberValid() {
-        return chipNumber.length() == 15 || chipNumber.length() == 0;
+        return isNull(chipNumber) || chipNumber.length() == 15 || chipNumber.length() == 0;
     }
 }

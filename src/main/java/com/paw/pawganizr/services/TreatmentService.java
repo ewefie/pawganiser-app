@@ -36,13 +36,15 @@ public class TreatmentService {
     }
 
     public Treatment updateTreatment(final UUID treatmentId, final Treatment updatedTreatment) {
-        findTreatmentById(treatmentId);
-        updatedTreatment.setId(treatmentId);
-        return treatmentRepository.save(updatedTreatment);
+        Treatment existingTreatment = findExistingTreatmentById(treatmentId);
+        existingTreatment.setDescription(updatedTreatment.getDescription());
+        existingTreatment.setTreatmentEndDate(updatedTreatment.getTreatmentEndDate());
+        existingTreatment.setTreatmentStartDate(updatedTreatment.getTreatmentStartDate());
+        existingTreatment.setType(updatedTreatment.getType());
+        return treatmentRepository.save(existingTreatment);
     }
 
-    public Treatment findExistingTreatmentById(final UUID treatmentId, final UUID petId) {
-        petService.throwIfPetDoesNotExist(petId);
+    public Treatment findExistingTreatmentById(final UUID treatmentId) {
         return findTreatmentById(treatmentId).orElseThrow(() -> new ResourceNotFoundException("Treatment with given id does not exist"));
     }
 
@@ -54,7 +56,6 @@ public class TreatmentService {
         petService.throwIfPetDoesNotExist(petId);
         return new Treatments(treatmentRepository.findAllByPetId(petId));
     }
-
 
     public void deleteAllTreatments(final UUID petId) {
         petService.findExistingPetById(petId);

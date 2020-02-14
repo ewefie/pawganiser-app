@@ -54,6 +54,6 @@ public class Treatment {
     @AssertTrue
     @JsonIgnore
     private boolean isTreatmentEndDateValid() {
-        return isNull(treatmentEndDate) || treatmentEndDate.isAfter(treatmentStartDate) || treatmentEndDate.equals(treatmentStartDate);
+        return isNull(treatmentEndDate) || !treatmentEndDate.isBefore(getTreatmentStartDate());
     }
 }
