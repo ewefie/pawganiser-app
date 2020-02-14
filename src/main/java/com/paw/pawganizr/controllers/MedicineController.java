@@ -25,7 +25,7 @@ public class MedicineController {
     @PreAuthorize("hasRole('USER')")
     public Medicine findById(@PathVariable(name = "petId") final UUID petId,
                              @PathVariable(name = "medicineId") final UUID medicineId) {
-        return medicineService.findExistingMedicineById(medicineId, petId);
+        return medicineService.findExistingMedicineById(medicineId);
     }
 
     @GetMapping("/pets/{petId}/medicines")
