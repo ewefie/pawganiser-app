@@ -2,6 +2,7 @@ package com.paw.pawganizr.enums;
 
 import lombok.AllArgsConstructor;
 
+@Deprecated
 @AllArgsConstructor
 public enum CoatColor {
     BLACK("czarny"),

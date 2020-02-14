@@ -16,8 +16,5 @@ public interface PetRepository extends JpaRepository<Pet, UUID> {
 
     List<Pet> findAllByOwner(AppUser owner);
 
-    @Query("select p from pets  p where  p.owner.id = :ownerId")
-    List<Pet> findAllPetsByOwnerId(@Param("ownerId") UUID ownerId);
-
     void deleteAllByOwnerId(final UUID ownerId);
 }

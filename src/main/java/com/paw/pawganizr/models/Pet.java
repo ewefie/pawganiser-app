@@ -1,14 +1,12 @@
 package com.paw.pawganizr.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.paw.pawganizr.enums.CoatColor;
 import com.paw.pawganizr.enums.PetGender;
 import com.paw.pawganizr.enums.PetType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
@@ -75,8 +73,7 @@ public class Pet {
     private String petAvatarUrl;
 
     @Column(name = "coat_color")
-    @Enumerated(EnumType.STRING)
-    private CoatColor color;
+    private String color;
 
     @JsonIgnore
     @OneToMany(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -105,27 +102,21 @@ public class Pet {
      * *************************************************************************************************************** *
      * additional details only for pets having pedigree, inputs will be shown only after checking "have pedigree" option.
      */
-    @Column(name = "pedigree")
-    private Boolean pedigree;
-
-    @Column(name = "pedigree_number")
-    private String pedigreeNum;
-
-    @Column(name = "breeder")
-    private String breeder;
-
     @Column(name = "race")
     private String race;
 
-    @Column(name = "mother_name")
-    private String motherName;
-
-    @Column(name = "father_name")
-    private String fatherName;
+    @OneToOne(mappedBy = "pet", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Pedigree pedigree;
 
     @AssertTrue
     @JsonIgnore
     private boolean isDeathDateValid() {
         return (!dead && isNull(deathDate)) || deathDate.isAfter(birthDate);
+    }
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isChipNumberValid() {
+        return chipNumber.length() == 15 || chipNumber.length() == 0;
     }
 }
