@@ -110,8 +110,10 @@ public class PetService {
         existingPet.setBirthDate(updatedPet.getBirthDate());
         existingPet.setDead(updatedPet.isDead());
         existingPet.setDeathDate(updatedPet.getDeathDate());
-        existingPet.setRace(updatedPet.getRace());
-        existingPet.sesType(updatedPet.getType());
+        existingPet.setPetAvatarUrl(updatedPet.getPetAvatarUrl());
+        existingPet.setChipNumber(updatedPet.getChipNumber());
+     //   existingPet.setRace(updatedPet.getRace());
+      //  existingPet.sesType(updatedPet.getType());
         return petRepository.save(existingPet);
     }
 
