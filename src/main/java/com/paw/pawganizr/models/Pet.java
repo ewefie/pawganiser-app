@@ -115,7 +115,7 @@ public class Pet {
     private String breeder;
 
     @Column(name = "race")
-    private String breed;
+    private String race;
 
     @Column(name = "mother_name")
     private String motherName;
