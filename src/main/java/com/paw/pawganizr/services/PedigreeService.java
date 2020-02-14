@@ -37,14 +37,14 @@ public class PedigreeService {
         return pedigreeRepository.save(pedigree);
     }
 
-    public void updatePedigree(final UUID petId, final Pedigree pedigree) {
+    public void updatePedigree(final UUID petId, final Pedigree updatedPedigree) {
         Pet pet = petService.findExistingPetById(petId);
-        Pedigree oldPedigree = pet.getPedigree();
-        oldPedigree.setBreeder(pedigree.getBreeder());
-        oldPedigree.setFatherName(pedigree.getFatherName());
-        oldPedigree.setMotherName(pedigree.getMotherName());
-        oldPedigree.setPedigreeNum(pedigree.getPedigreeNum());
-        pedigreeRepository.save(oldPedigree);
+        Pedigree existingPedigree = pet.getPedigree();
+        existingPedigree.setBreeder(updatedPedigree.getBreeder());
+        existingPedigree.setFatherName(updatedPedigree.getFatherName());
+        existingPedigree.setMotherName(updatedPedigree.getMotherName());
+        existingPedigree.setPedigreeNum(updatedPedigree.getPedigreeNum());
+        pedigreeRepository.save(existingPedigree);
     }
 
     public Pedigree findExistingPedigree(final UUID petId) {

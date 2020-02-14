@@ -32,9 +32,11 @@ public class NutritionService {
     }
 
     public Nutrition updateNutrition(final UUID petId, final UUID nutritionId, final Nutrition updatedNutrition) {
-        findExistingNutritionById(nutritionId, petId);
-        updatedNutrition.setId(nutritionId);
-        return nutritionRepository.save(updatedNutrition);
+        final Nutrition existingNutrition = findExistingNutritionById(nutritionId);
+        existingNutrition.setBrand(updatedNutrition.getBrand());
+        existingNutrition.setDescription(updatedNutrition.getDescription());
+        existingNutrition.setFoodName(updatedNutrition.getFoodName());
+        return nutritionRepository.save(existingNutrition);
     }
 
     public void deleteById(final UUID id) {
@@ -54,6 +56,10 @@ public class NutritionService {
 //        petService.throwIfUserOrPetDoesNotExist(userId, petId);
 //        return findById(nutritionId).orElseThrow(() -> new ResourceNotFoundException("Nutrition with given id does not exist"));
 //    }
+
+    public Nutrition findExistingNutritionById(final UUID nutritionId) {
+        return findById(nutritionId).orElseThrow(() -> new ResourceNotFoundException("Nutrition with given id does not exist"));
+    }
 
     public Nutrition findExistingNutritionById(final UUID nutritionId, final UUID petId) {
         petService.throwIfPetDoesNotExist(petId);

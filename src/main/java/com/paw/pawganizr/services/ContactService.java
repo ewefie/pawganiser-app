@@ -67,8 +67,13 @@ public class ContactService {
 
 
     public Contact updateContact(final UUID contactId, final Contact updatedContact) {
-        updatedContact.setId(contactId);
-        return contactRepository.save(updatedContact);
+        final Contact existingContact = findExistingContact(contactId);
+        existingContact.setDescription(updatedContact.getDescription());
+        existingContact.setEmail(updatedContact.getEmail());
+        existingContact.setPhoneNumber(updatedContact.getPhoneNumber());
+        existingContact.setType(existingContact.getType());
+        existingContact.setName(updatedContact.getName());
+        return contactRepository.save(existingContact);
     }
 
     public Contact findExistingContact(final UUID contactId) {
