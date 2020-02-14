@@ -105,6 +105,13 @@ public class PetService {
     public Pet updatePet(final UUID petId, final Pet updatedPet) {
         Pet existingPet = findExistingPetById(petId);
         existingPet.setPetName(updatedPet.getPetName());
+        existingPet.setGender(updatedPet.getGender());
+        existingPet.setColor(updatedPet.getColor());
+        existingPet.setBirthDate(updatedPet.getBirthDate());
+        existingPet.setDead(updatedPet.isDead());
+        existingPet.setDeathDate(updatedPet.getDeathDate());
+        existingPet.setRace(updatedPet.getRace());
+        existingPet.sesType(updatedPet.getType());
         return petRepository.save(existingPet);
     }
 
