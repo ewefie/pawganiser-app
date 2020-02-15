@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.validator.constraints.Length;
@@ -66,7 +67,6 @@ public class Pet {
     private PetGender gender;
 
     @Column(name = "chip_number")
-    @Length(min = 15, max = 15, message = "Chip number is incorrect")
     private String chipNumber; //chip number
 
     @Column(name = "avatar_url")
@@ -105,8 +105,11 @@ public class Pet {
     @Column(name = "race")
     private String race;
 
-    @JsonIgnore
-    @OneToOne(mappedBy = "pet")
+    //    @JsonIgnore
+//    @OneToOne(mappedBy = "pet", cascade = CascadeType.ALL)
+    @OneToOne
+    @JoinColumn(name = "pedigree_id")
+    @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Pedigree pedigree;
 
     @AssertTrue
