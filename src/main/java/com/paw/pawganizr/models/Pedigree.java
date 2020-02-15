@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.UUID;
 
 @Entity(name = "pedigrees")
@@ -27,7 +26,6 @@ public class Pedigree {
     private UUID id;
 
     @Column(name = "pedigree_number")
-    @NotNull
     private String pedigreeNum;
 
     @Column(name = "breeder")
@@ -39,7 +37,8 @@ public class Pedigree {
     @Column(name = "father_name")
     private String fatherName;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @JsonIgnore
+    @OneToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
 }

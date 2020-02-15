@@ -33,13 +33,15 @@ public class PedigreeService {
 
     public Pedigree addPedigree(final UUID petId, final Pedigree pedigree) {
         Pet pet = petService.findExistingPetById(petId);
+        pet.setPedigree(pedigree);
         pedigree.setPet(pet);
         return pedigreeRepository.save(pedigree);
     }
 
     public void updatePedigree(final UUID petId, final Pedigree updatedPedigree) {
-        Pet pet = petService.findExistingPetById(petId);
-        Pedigree existingPedigree = pet.getPedigree();
+//        Pet pet = petService.findExistingPetById(petId);
+//        Pedigree existingPedigree = pet.getPedigree();
+        Pedigree existingPedigree = findExistingPedigree(petId);
         existingPedigree.setBreeder(updatedPedigree.getBreeder());
         existingPedigree.setFatherName(updatedPedigree.getFatherName());
         existingPedigree.setMotherName(updatedPedigree.getMotherName());
