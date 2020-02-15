@@ -14,7 +14,6 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = {"http://localhost:9000", "http://pawganiser.sdacademy.xyz"})
 public class ContactController {
 
     private final ContactService contactService;
@@ -51,7 +50,7 @@ public class ContactController {
     @PreAuthorize("hasRole('USER')")
     public void deleteContactById(@PathVariable("contactId") final UUID contactId,
                                   @CurrentUser final UserPrincipal principal) {
-        contactService.deleteById(contactId);
+        contactService.deleteById(contactId, principal.getId());
     }
 
     @DeleteMapping("/contacts")
@@ -66,6 +65,6 @@ public class ContactController {
     @PreAuthorize("hasRole('USER')")
     public void updateContact(@PathVariable("contactId") final UUID contactId,
                               @RequestBody @Valid Contact updatedContact, @CurrentUser final UserPrincipal principal) {
-        contactService.updateContact(contactId, updatedContact);
+        contactService.updateContact(contactId, updatedContact, principal.getId());
     }
 }

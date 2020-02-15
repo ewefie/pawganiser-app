@@ -1,15 +1,14 @@
 package com.paw.pawganizr.services;
 
+import com.paw.pawganizr.exceptions.AccessDeniedException;
 import com.paw.pawganizr.exceptions.ResourceNotFoundException;
 import com.paw.pawganizr.models.AppUser;
 import com.paw.pawganizr.models.Contact;
-import com.paw.pawganizr.security.UserPrincipal;
-import com.paw.pawganizr.wrappers.Contacts;
 import com.paw.pawganizr.repositories.ContactRepository;
+import com.paw.pawganizr.wrappers.Contacts;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -25,25 +24,19 @@ public class ContactService {
         this.userService = userService;
     }
 
-    public Contact createContact(final UUID appUserId, final Contact contact) {
-        final AppUser existingUser = userService.findExistingUser(appUserId);
+    public Contact createContact(final UUID userId, final Contact contact) {
+        final AppUser existingUser = userService.findExistingUser(userId);
         contact.setUser(existingUser);
         return contactRepository.save(contact);
     }
 
-    public void deleteById(final UUID contactId, final UUID appUserId) {
-        userService.findExistingUser(appUserId);
+    public void deleteById(final UUID contactId, final UUID userId) {
+        returnContactIfUserHasAccess(userId, contactId);
         contactRepository.deleteById(contactId);
     }
 
-    public Contacts findAllContactsByUserId(final UUID appUserId) {
-        return new Contacts(contactRepository.findAllByUserId(appUserId));
-    }
-
-    public Contact updateContact(final UUID appUserId, UUID contactId, final Contact updatedContact) {
-        findExistingContact(appUserId, contactId);
-        updatedContact.setId(contactId);
-        return contactRepository.save(updatedContact);
+    public Contacts findAllContactsByUserId(final UUID userId) {
+        return new Contacts(contactRepository.findAllByUserId(userId));
     }
 
     public Optional<Contact> findContactById(final UUID contactId) {
@@ -51,7 +44,7 @@ public class ContactService {
     }
 
     public Contact findExistingContact(final UUID userId, final UUID contactId) {
-        return findContactById(contactId).orElseThrow(() -> new ResourceNotFoundException("Contact with given id does not exist"));
+        return returnContactIfUserHasAccess(userId, contactId);
     }
 
     public Contact findExistingContact(final UUID contactId) {
@@ -63,14 +56,8 @@ public class ContactService {
         contactRepository.deleteAllByUserId(userId);
     }
 
-
-    public void deleteById(final UUID contactId) {
-        contactRepository.deleteById(contactId);
-    }
-
-
-    public Contact updateContact(final UUID contactId, final Contact updatedContact) {
-        final Contact existingContact = findExistingContact(contactId);
+    public Contact updateContact(final UUID contactId, final Contact updatedContact, final UUID userId) {
+        final Contact existingContact = returnContactIfUserHasAccess(userId, contactId);
         existingContact.setDescription(updatedContact.getDescription());
         existingContact.setEmail(updatedContact.getEmail());
         existingContact.setPhoneNumber(updatedContact.getPhoneNumber());
@@ -79,8 +66,11 @@ public class ContactService {
         return contactRepository.save(existingContact);
     }
 
-//    public boolean hasAccessToContact(final UUID userId, final UUID contactId) {
-//
-//    }
-
+    public Contact returnContactIfUserHasAccess(final UUID userId, final UUID contactId) {
+        final Contact existingContact = findExistingContact(contactId);
+        if (existingContact.getUser().getId().equals(userId)) {
+            return existingContact;
+        }
+        throw new AccessDeniedException("User do not have permissions to see this content");
+    }
 }
