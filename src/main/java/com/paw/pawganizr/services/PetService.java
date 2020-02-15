@@ -117,10 +117,6 @@ public class PetService {
         return petRepository.save(existingPet);
     }
 
-//    public void throwIfUserOrPetDoesNotExist(final UUID userId, final UUID petId) {
-//        findExistingPetById(petId);
-//        userService.findExistingUser(userId);
-//    }
 
     public void throwIfPetDoesNotExist(final UUID petId) {
         findExistingPetById(petId);

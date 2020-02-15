@@ -6,9 +6,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import java.util.UUID;
+
+import static java.util.Objects.isNull;
+import static java.util.Objects.nonNull;
 
 @Entity(name = "pedigrees")
 @Data
@@ -16,6 +22,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 public class Pedigree {
+    @JsonIgnore
     @Id
     @GeneratedValue(generator = "UUID")
     @GenericGenerator(
@@ -25,8 +32,10 @@ public class Pedigree {
     @Column(name = "id", updatable = false, nullable = false)
     private UUID id;
 
+    @NotNull
+    @Length(min = 1)
     @Column(name = "pedigree_number")
-    private String pedigreeNum;
+    private String pedigreeNumber;
 
     @Column(name = "breeder")
     private String breeder;

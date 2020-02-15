@@ -10,7 +10,9 @@ import java.util.UUID;
 @Repository
 public interface PedigreeRepository extends JpaRepository<Pedigree, UUID> {
 
-    Pedigree deleteByPetId(UUID petId);
+    void deleteAllByPetId(UUID petId);
+
+    void deleteByPetId(UUID petId);
 
     Optional<Pedigree> findByPetId(UUID petId);
 

@@ -105,8 +105,7 @@ public class Pet {
     @Column(name = "race")
     private String race;
 
-    //    @JsonIgnore
-//    @OneToOne(mappedBy = "pet", cascade = CascadeType.ALL)
+    @JsonIgnore
     @OneToOne
     @JoinColumn(name = "pedigree_id")
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})

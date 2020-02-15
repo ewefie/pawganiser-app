@@ -28,28 +28,21 @@ public class PedigreeService {
     }
 
     public void deletePedigree(final UUID petId) {
-        pedigreeRepository.deleteByPetId(petId);
+        pedigreeRepository.deleteAllByPetId(petId);
     }
 
-    public Pedigree addPedigree(final UUID petId, final Pedigree pedigree) {
+    public void saveOrUpdate(final UUID petId, final Pedigree updatedPedigree) {
         Pet pet = petService.findExistingPetById(petId);
-        pet.setPedigree(pedigree);
-        pedigree.setPet(pet);
-        return pedigreeRepository.save(pedigree);
-    }
-
-    public void updatePedigree(final UUID petId, final Pedigree updatedPedigree) {
-//        Pet pet = petService.findExistingPetById(petId);
-//        Pedigree existingPedigree = pet.getPedigree();
         Pedigree existingPedigree = findExistingPedigree(petId);
         existingPedigree.setBreeder(updatedPedigree.getBreeder());
         existingPedigree.setFatherName(updatedPedigree.getFatherName());
         existingPedigree.setMotherName(updatedPedigree.getMotherName());
-        existingPedigree.setPedigreeNum(updatedPedigree.getPedigreeNum());
+        existingPedigree.setPedigreeNumber(updatedPedigree.getPedigreeNumber());
+        existingPedigree.setPet(pet);
         pedigreeRepository.save(existingPedigree);
     }
 
     public Pedigree findExistingPedigree(final UUID petId) {
-        return findPedigree(petId).orElseThrow(() -> new ResourceNotFoundException("Pet does not have pedigree yet."));
+        return findPedigree(petId).orElse(new Pedigree());
     }
 }

@@ -5,6 +5,7 @@ import com.paw.pawganizr.services.PedigreeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -28,15 +29,9 @@ public class PedigreeController {
         pedigreeService.deletePedigree(petId);
     }
 
-    @PostMapping("/pets/{petId}/pedigree/")
-    @ResponseStatus(HttpStatus.CREATED)
-    public Pedigree addPetsPedigree(@PathVariable(name = "petId") final UUID petId, @RequestBody final Pedigree pedigree) {
-        return pedigreeService.addPedigree(petId, pedigree);
-    }
-
     @PutMapping("/pets/{petId}/pedigree/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void updatePetsPedigree(@PathVariable(name = "petId") final UUID petId, @RequestBody final Pedigree pedigree) {
-        pedigreeService.updatePedigree(petId, pedigree);
+    public void updatePetsPedigree(@PathVariable(name = "petId") final UUID petId, @Valid @RequestBody final Pedigree pedigree) {
+        pedigreeService.saveOrUpdate(petId, pedigree);
     }
 }
