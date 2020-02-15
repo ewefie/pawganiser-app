@@ -10,6 +10,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.util.Objects.isNull;
+
 @Service
 @Transactional
 public class PedigreeService {
@@ -34,6 +36,7 @@ public class PedigreeService {
     public void saveOrUpdate(final UUID petId, final Pedigree updatedPedigree) {
         Pet pet = petService.findExistingPetById(petId);
         Pedigree existingPedigree = findExistingPedigree(petId);
+        if (isNull(existingPedigree)) existingPedigree = new Pedigree();
         existingPedigree.setBreeder(updatedPedigree.getBreeder());
         existingPedigree.setFatherName(updatedPedigree.getFatherName());
         existingPedigree.setMotherName(updatedPedigree.getMotherName());
@@ -43,6 +46,6 @@ public class PedigreeService {
     }
 
     public Pedigree findExistingPedigree(final UUID petId) {
-        return findPedigree(petId).orElse(new Pedigree());
+        return findPedigree(petId).orElse(null);
     }
 }

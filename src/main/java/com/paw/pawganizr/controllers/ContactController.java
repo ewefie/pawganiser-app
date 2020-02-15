@@ -35,7 +35,7 @@ public class ContactController {
     public Contact findContact(
             @PathVariable(name = "contactId") final UUID contactId,
             @CurrentUser final UserPrincipal principal) {
-        return contactService.findExistingContact(contactId);
+        return contactService.findExistingContact(contactId, principal.getId());
     }
 
     @PostMapping("/contacts")

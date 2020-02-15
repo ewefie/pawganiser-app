@@ -51,7 +51,10 @@ public class ContactService {
     }
 
     public Contact findExistingContact(final UUID userId, final UUID contactId) {
-        userService.findExistingUser(userId);
+        return findContactById(contactId).orElseThrow(() -> new ResourceNotFoundException("Contact with given id does not exist"));
+    }
+
+    public Contact findExistingContact(final UUID contactId) {
         return findContactById(contactId).orElseThrow(() -> new ResourceNotFoundException("Contact with given id does not exist"));
     }
 
@@ -76,7 +79,8 @@ public class ContactService {
         return contactRepository.save(existingContact);
     }
 
-    public Contact findExistingContact(final UUID contactId) {
-        return findContactById(contactId).orElseThrow(() -> new ResourceNotFoundException("Contact with given id does not exist"));
-    }
+//    public boolean hasAccessToContact(final UUID userId, final UUID contactId) {
+//
+//    }
+
 }

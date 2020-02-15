@@ -9,7 +9,7 @@ import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/users/pets")
 public class PedigreeController {
 
     private final PedigreeService pedigreeService;
@@ -18,18 +18,18 @@ public class PedigreeController {
         this.pedigreeService = pedigreeService;
     }
 
-    @GetMapping("/pets/{petId}/pedigree/")
+    @GetMapping("/{petId}/pedigree/")
     public Pedigree getPetsPedigree(@PathVariable(name = "petId") final UUID petId) {
         return pedigreeService.findExistingPedigree(petId);
     }
 
-    @DeleteMapping("/pets/{petId}/pedigree/")
+    @DeleteMapping("/{petId}/pedigree/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deletePetsPedigree(@PathVariable(name = "petId") final UUID petId) {
         pedigreeService.deletePedigree(petId);
     }
 
-    @PutMapping("/pets/{petId}/pedigree/")
+    @PutMapping("/{petId}/pedigree/")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updatePetsPedigree(@PathVariable(name = "petId") final UUID petId, @Valid @RequestBody final Pedigree pedigree) {
         pedigreeService.saveOrUpdate(petId, pedigree);
