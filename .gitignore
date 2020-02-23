@@ -1,5 +1,9 @@
 HELP.md
-application.properties
+endpoints.md
+.mvn
+mvnw.cmd
+mvnw
+pawganizr.iml
 nohup.out
 ci.txt
 target/
