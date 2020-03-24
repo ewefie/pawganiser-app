@@ -42,12 +42,10 @@ public class Pet {
      */
     @Column(name = "pet_name")
     @Length(min = 2)
-    @NotNull
     private String petName;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
-    @NotNull
     private PetType type;
 
     @ManyToOne

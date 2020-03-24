@@ -22,10 +22,10 @@ public class ContactService {
 
     public ContactDto saveContact(final Long userId, final ContactDto contactDto) {
         var existingUser = appUserService.getExistingUser(userId);
-        var contactToSave = ContactMapper.INSTANCE.ContactDtoToContact(contactDto);
+        var contactToSave = ContactMapper.INSTANCE.dtoToContact(contactDto);
         contactToSave.setUser(existingUser);
         contactRepository.save(contactToSave);
-        return ContactMapper.INSTANCE.ContactToContactDto(contactToSave);
+        return ContactMapper.INSTANCE.contactToDto(contactToSave);
     }
 
     Contact getExistingContact(final Long contactId) {
@@ -34,7 +34,7 @@ public class ContactService {
 
     public Contacts getAllContactsByUserId(final Long userId) {
         var list = contactRepository.findAllByUserId(userId).stream()
-                .map(ContactMapper.INSTANCE::ContactToContactDto)
+                .map(ContactMapper.INSTANCE::contactToDto)
                 .collect(Collectors.toList());
         return new Contacts(list);
     }
@@ -42,7 +42,7 @@ public class ContactService {
     public ContactDto getContactById(final Long contactId, final Long userId) {
         var existingContact = getExistingContact(contactId);
         if (existingContact.getUser().getId().equals(userId)) {
-            return ContactMapper.INSTANCE.ContactToContactDto(existingContact);
+            return ContactMapper.INSTANCE.contactToDto(existingContact);
         }
         throw new AccessDeniedException("You do not have permission to access this content");
     }
@@ -66,7 +66,7 @@ public class ContactService {
         existingContact.setPhoneNumber(updatedContact.getPhoneNumber());
         existingContact.setType(existingContact.getType());
         existingContact.setName(updatedContact.getName());
-        contactRepository.save(ContactMapper.INSTANCE.ContactDtoToContact(existingContact));
+        contactRepository.save(ContactMapper.INSTANCE.dtoToContact(existingContact));
         return existingContact;
     }
 }

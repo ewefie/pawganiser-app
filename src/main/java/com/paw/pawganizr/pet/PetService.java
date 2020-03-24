@@ -1,14 +1,11 @@
 package com.paw.pawganizr.pet;
 
 import com.paw.pawganizr.exceptions.ResourceNotFoundException;
-import com.paw.pawganizr.user.AppUser;
 import com.paw.pawganizr.user.AppUserService;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.security.Principal;
-import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -17,17 +14,17 @@ public class PetService {
     private final AppUserService appUserService;
     private final PetRepository petRepository;
 
-    public PetService(AppUserService appUserService, PetRepository petRepository) {
+    public PetService(final AppUserService appUserService, final PetRepository petRepository) {
         this.appUserService = appUserService;
         this.petRepository = petRepository;
     }
 
     public PetDto savePet(final PetDto petDto, final Long userId) {
         var existingUser = appUserService.getExistingUser(userId);
-        var petToSave = PetMapper.INSTANCE.petDtoToPet(petDto);
+        var petToSave = PetMapper.INSTANCE.dtoToPet(petDto);
         petToSave.setOwner(existingUser);
         petRepository.save(petToSave);
-        return PetMapper.INSTANCE.petToPetDto(petToSave);
+        return PetMapper.INSTANCE.petToDto(petToSave);
     }
 
     Pet getExistingPetById(final Long petId) {
@@ -36,7 +33,7 @@ public class PetService {
 
     public Pets getAllPetsByUserId(final Long userId) {
         var petList = petRepository.findAllByOwnerId(userId).stream() //todo: check if this method works
-                .map(PetMapper.INSTANCE::petToPetDto)
+                .map(PetMapper.INSTANCE::petToDto)
                 .collect(Collectors.toList());
         return new Pets(petList);
     }
@@ -44,7 +41,7 @@ public class PetService {
     public PetDto getPetById(final Long petId, final Long userId) {
         var existingPet = getExistingPetById(petId);
         if (existingPet.getOwner().getId().equals(userId)) {
-            return PetMapper.INSTANCE.petToPetDto(existingPet);
+            return PetMapper.INSTANCE.petToDto(existingPet);
         }
         throw new AccessDeniedException("You do not have permission to access this content");
     }
@@ -74,7 +71,7 @@ public class PetService {
         existingPet.setChipNumber(updatedPet.getChipNumber());
         existingPet.setRace(updatedPet.getRace());
         existingPet.setType(updatedPet.getType());
-        petRepository.save(PetMapper.INSTANCE.petDtoToPet(existingPet));
+        petRepository.save(PetMapper.INSTANCE.dtoToPet(existingPet));
         return existingPet;
     }
 }
