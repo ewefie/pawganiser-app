@@ -1,6 +1,5 @@
 package com.paw.pawganizr.medicine;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paw.pawganizr.pet.Pet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,7 +7,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 @Entity(name = "medicines")
 @Data
@@ -21,7 +19,6 @@ public class Medicine {
     private Long id;
 
     @Column(name = "medicine_name")
-    @NotNull
     @Length(min = 2)
     private String name;
 
@@ -34,7 +31,6 @@ public class Medicine {
     @Enumerated(EnumType.STRING)
     private MedicineImportancy importancy;
 
-    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
