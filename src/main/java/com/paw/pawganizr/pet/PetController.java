@@ -28,7 +28,7 @@ public class PetController {
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
     @ApiResponses(value = {
-            @ApiResponse(code = 201, message = "Pets successfully uploaded"),
+            @ApiResponse(code = 201, message = "Pet successfully uploaded"),
             @ApiResponse(code = 401, message = "You are not authorized to access the resource"),
             @ApiResponse(code = 403, message = "Accessing the resource you were trying to reach is forbidden"),
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found")
