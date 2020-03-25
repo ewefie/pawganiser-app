@@ -1,6 +1,5 @@
 package com.paw.pawganizr.pet;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paw.pawganizr.medicine.Medicine;
 import com.paw.pawganizr.nutrition.Nutrition;
 import com.paw.pawganizr.pedigree.Pedigree;
@@ -15,13 +14,9 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
-import javax.validation.constraints.AssertTrue;
-import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
-
-import static java.util.Objects.isNull;
 
 @Entity(name = "pets")
 @Data

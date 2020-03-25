@@ -5,7 +5,6 @@ import com.paw.pawganizr.pet.Pet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -17,11 +16,7 @@ import java.time.LocalDate;
 public class Treatment {
 
     @Id
-    @GeneratedValue(generator = "Long")
-    @GenericGenerator(
-            name = "Long",
-            strategy = "org.hibernate.id.LongGenerator"
-    )
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
