@@ -1,0 +1,33 @@
+version: '3'
+
+services:
+  paw-mysql:
+    restart: always
+    container_name: paw-mysql
+    image: mysql:8
+    environment:
+      MYSQL_DATABASE: pawganiser-db
+      MYSQL_ROOT_PASSWORD: pawganiser
+      MYSQL_ROOT_HOST: '%'
+
+    ports:
+      - 6633:3306
+    healthcheck:
+      test: "/usr/bin/mysql --user=root --password=pawganiser --execute \"SHOW DATABASES;\""
+      interval: 2s
+      timeout: 20s
+      retries: 10
+
+  pawganiser-app:
+    restart: on-failure
+    build:
+      context: .
+    expose:
+      - 8080
+    ports:
+      - 8080:8080
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      WAIT_HOSTS: mysql:3306
+    depends_on:
+      - paw-mysql

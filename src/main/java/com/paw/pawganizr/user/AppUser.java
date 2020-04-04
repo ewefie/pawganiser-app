@@ -55,9 +55,6 @@ public class AppUser {
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets;
 
-    @Column(nullable = false)
-    private Boolean emailVerified = false;
-
     @JsonIgnore
     @Column(name = "password")
     private String password;

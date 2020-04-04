@@ -27,10 +27,9 @@ Manage your pets and keep important information about their health and preferenc
 
 
 ## Setup:
-To run project locally using Maven, Java and MySQL (remember to replace db url, password and username in application.properties with your own credentials):
 ```
 $ mvn package
-$ java --jar target/*jar
+$ docker-compose up
 ```
 
 ### Status:
