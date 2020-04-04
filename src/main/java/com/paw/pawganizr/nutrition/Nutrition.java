@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "nutrition_details")
 @Data
@@ -19,6 +20,7 @@ public class Nutrition {
     private Long id;
 
     @Length(min = 2)
+    @NotNull
     @Column(name = "food_name")
     private String foodName;
 

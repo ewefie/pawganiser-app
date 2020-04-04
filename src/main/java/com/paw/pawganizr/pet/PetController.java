@@ -27,6 +27,7 @@ public class PetController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @PreAuthorize("hasRole('USER')")
     @ResponseStatus(HttpStatus.CREATED)
+    @ApiOperation(value = "Add a pet", response = Pets.class)
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Pet successfully uploaded"),
             @ApiResponse(code = 401, message = "You are not authorized to access the resource"),

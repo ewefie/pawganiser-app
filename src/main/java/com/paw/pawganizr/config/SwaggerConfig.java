@@ -2,12 +2,19 @@ package com.paw.pawganizr.config;
 
 import com.google.common.base.Predicate;
 import com.google.common.collect.Lists;
+import com.paw.pawganizr.contact.Contact;
 import com.paw.pawganizr.contact.ContactController;
+import com.paw.pawganizr.medicine.Medicine;
 import com.paw.pawganizr.medicine.MedicineController;
+import com.paw.pawganizr.nutrition.Nutrition;
 import com.paw.pawganizr.nutrition.NutritionController;
+import com.paw.pawganizr.pedigree.Pedigree;
 import com.paw.pawganizr.pedigree.PedigreeController;
+import com.paw.pawganizr.pet.Pet;
 import com.paw.pawganizr.pet.PetController;
+import com.paw.pawganizr.treatment.Treatment;
 import com.paw.pawganizr.treatment.TreatmentController;
+import com.paw.pawganizr.user.AppUser;
 import com.paw.pawganizr.user.AppUserController;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -22,10 +29,6 @@ import springfox.documentation.spi.service.contexts.SecurityContext;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-import java.io.File;
-import java.io.InputStream;
-import java.net.URI;
-import java.net.URL;
 import java.util.List;
 
 import static com.google.common.base.Predicates.or;
@@ -48,7 +51,7 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(getSwaggerPaths())
                 .build()
-                .ignoredParameterTypes(InputStream.class, URI.class, URL.class, File.class)
+                .ignoredParameterTypes(Contact.class, Nutrition.class, Pet.class, AppUser.class, Medicine.class, Treatment.class, Pedigree.class)
                 .securitySchemes(Lists.newArrayList(apiKey()))
                 .securityContexts(Lists.newArrayList(securityContext()));
     }

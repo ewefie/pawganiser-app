@@ -1,13 +1,18 @@
 package com.paw.pawganizr.treatment;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paw.pawganizr.pet.Pet;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+
+import static java.util.Objects.isNull;
 
 @Entity(name = "treatments")
 @Data
@@ -20,6 +25,7 @@ public class Treatment {
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    @NotNull
     @Column(name = "treatment_type")
     @Enumerated(EnumType.STRING)
     private TreatmentType type;
@@ -27,6 +33,7 @@ public class Treatment {
     @Column(name = "description")
     private String description;
 
+    @NotNull
     @Column(name = "treatment_start_date")
     private LocalDate treatmentStartDate;
 
@@ -36,4 +43,10 @@ public class Treatment {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isTreatmentEndDateValid() {
+        return isNull(treatmentEndDate) || !treatmentEndDate.isBefore(getTreatmentStartDate());
+    }
 }

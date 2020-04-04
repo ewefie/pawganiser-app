@@ -47,15 +47,15 @@ public class AppUser {
     /**
      * optional fields
      */
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Contact> contacts;
 
-//    @JsonIgnore
+    @JsonIgnore
     @OneToMany(mappedBy = "owner", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Pet> pets;
 
-//    @JsonIgnore
+    @JsonIgnore
     @Column(name = "password")
     private String password;
 }

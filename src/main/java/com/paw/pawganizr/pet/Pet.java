@@ -1,5 +1,6 @@
 package com.paw.pawganizr.pet;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.paw.pawganizr.medicine.Medicine;
 import com.paw.pawganizr.nutrition.Nutrition;
 import com.paw.pawganizr.pedigree.Pedigree;
@@ -14,9 +15,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.AssertTrue;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
+
+import static java.util.Objects.isNull;
 
 @Entity(name = "pets")
 @Data
@@ -37,8 +42,10 @@ public class Pet {
      */
     @Column(name = "pet_name")
     @Length(min = 2)
+    @NotNull
     private String petName;
 
+    @NotNull
     @Enumerated(EnumType.STRING)
     @Column(name = "type")
     private PetType type;
@@ -95,4 +102,16 @@ public class Pet {
     @JoinColumn(name = "pedigree_id")
     @Cascade({org.hibernate.annotations.CascadeType.PERSIST, org.hibernate.annotations.CascadeType.MERGE})
     private Pedigree pedigree;
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isDeathDateValid() {
+        return (!dead && isNull(deathDate)) || deathDate.isAfter(birthDate);
+    }
+
+    @AssertTrue
+    @JsonIgnore
+    private boolean isChipNumberValid() {
+        return isNull(chipNumber) || chipNumber.length() == 15 || chipNumber.length() == 0;
+    }
 }

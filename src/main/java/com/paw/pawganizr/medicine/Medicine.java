@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "medicines")
 @Data
@@ -20,6 +21,7 @@ public class Medicine {
 
     @Column(name = "medicine_name")
     @Length(min = 2)
+    @NotNull
     private String name;
 
 //    private MedicineType type;
@@ -34,9 +36,4 @@ public class Medicine {
     @ManyToOne
     @JoinColumn(name = "pet_id")
     private Pet pet;
-    /**
-     * optional
-     */
-//    private LocalDate treatmentStartDate;
-//    private LocalDate treatmentEndDate;
 }

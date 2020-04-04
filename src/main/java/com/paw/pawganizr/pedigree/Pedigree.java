@@ -5,8 +5,10 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity(name = "pedigrees")
 @Data
@@ -14,11 +16,14 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Builder
 public class Pedigree {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", updatable = false, nullable = false)
     private Long id;
 
+    @NotNull
+    @Length(min = 1)
     @Column(name = "pedigree_number")
     private String pedigreeNumber;
 
