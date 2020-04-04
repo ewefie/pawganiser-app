@@ -42,8 +42,8 @@ public class AuthController {
             @ApiResponse(code = 404, message = "The resource you were trying to reach is not found"),
             @ApiResponse(code = 409, message = "User with given email already exist")
     })
-    public String signup(@Valid @RequestBody final SignUpRequest signUpRequest) {
+    public com.paw.pawganizr.security.user.ApiResponse signup(@Valid @RequestBody final SignUpRequest signUpRequest) {
         authService.registerUser(signUpRequest);
-        return "User registered successfully";
+        return new com.paw.pawganizr.security.user.ApiResponse(true, "User registered successfully");
     }
 }
