@@ -1,6 +1,7 @@
 package com.paw.pawganizr.exceptions;
 
 
+import com.paw.pawganizr.security.user.UserAlreadyExistsException;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

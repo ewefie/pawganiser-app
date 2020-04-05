@@ -3,7 +3,7 @@
 ## Overview
 Manage your pets and keep important information about their health and preferences in one place.
 
-## Live demo: [click here](http://somedayiwill-env.eba-3hdq2v4t.us-west-2.elasticbeanstalk.com/swagger-ui.html#/)
+## Live demo: soon...
 
 ## User stories
  - [x] User can create an account.
