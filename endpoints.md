@@ -1,51 +1,51 @@
 ###Base URL: 
-pawganiser.sdacademy.xyz:8090
+localhost:8090
 
 ###Users:
 
-- POST pawganiser.sdacademy.xyz:8090/api/users
-- GET pawganiser.sdacademy.xyz:8090/api/users/
-- PUT pawganiser.sdacademy.xyz:8090/api/users/
-- DELETE pawganiser.sdacademy.xyz:8090/api/users/
+- POST localhost:8090/users/me
+- GET localhost:8090/users/me/
+- PUT localhost:8090/users/me/
+- DELETE localhost:8090/users/me/
 
 ###Contacts
-- POST pawganiser.sdacademy.xyz:8090/api/users/{userId}/contacts
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/contacts
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/contacts/{contactId}
-- PUT pawganiser.sdacademy.xyz:8090/api/users/{userId}/contacts/{contactId}
-- (Remove all contacts) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/contacts
-- (Remove contact by its ID) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/contacts/{contactId}
+- POST localhost:8090/users/me/{userId}/contacts
+- GET localhost:8090/users/me/{userId}/contacts
+- GET localhost:8090/users/me/{userId}/contacts/{contactId}
+- PUT localhost:8090/users/me/{userId}/contacts/{contactId}
+- (Remove all contacts) DELETE localhost:8090/users/me/{userId}/contacts
+- (Remove contact by its ID) DELETE localhost:8090/users/me/{userId}/contacts/{contactId}
 
 ###Pets:
-- POST pawganiser.sdacademy.xyz:8090/api/users/pets
-- GET pawganiser.sdacademy.xyz:8090/api/users/pets
-- GET pawganiser.sdacademy.xyz:8090/api/users/pets/{petId}
-- (Not available yet)PUT pawganiser.sdacademy.xyz:8090/api/users/pets/{petId}
-- (Remove all pets) DELETE pawganiser.sdacademy.xyz:8090/api/users/pets
-- (Remove pet by its ID) DELETE pawganiser.sdacademy.xyz:8090/api/users/pets/{petId}
+- POST localhost:8090/users/me/pets
+- GET localhost:8090/users/me/pets
+- GET localhost:8090/users/me/pets/{petId}
+- (Not available yet)PUT localhost:8090/users/me/pets/{petId}
+- (Remove all pets) DELETE localhost:8090/users/me/pets
+- (Remove pet by its ID) DELETE localhost:8090/users/me/pets/{petId}
 
 ###Treatments
-- POST pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/treatments
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/treatments
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/treatments/{treatmentId}
-- PUT pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/treatments/{treatmentId}
-- (Remove all treatments by pet id) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/treatments
-- (Remove treatment by its ID) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/treatments/{treatmentId}
+- POST localhost:8090/users/me/{userId}/pets/{petId}/treatments
+- GET localhost:8090/users/me/{userId}/pets/{petId}/treatments
+- GET localhost:8090/users/me/{userId}/pets/{petId}/treatments/{treatmentId}
+- PUT localhost:8090/users/me/{userId}/pets/{petId}/treatments/{treatmentId}
+- (Remove all treatments by pet id) DELETE localhost:8090/users/me/{userId}/pets/{petId}/treatments
+- (Remove treatment by its ID) DELETE localhost:8090/users/me/{userId}/pets/{petId}/treatments/{treatmentId}
 
 ###Medicines
-- POST pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/medicines
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/medicines
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/medicines/{medicineId}
-- PUT pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/medicines/{medicineId}
-- (Remove all medicines by pet id) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/medicines
-- (Remove medicine by its ID) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/medicines/{medicineId}
+- POST localhost:8090/users/me/{userId}/pets/{petId}/medicines
+- GET localhost:8090/users/me/{userId}/pets/{petId}/medicines
+- GET localhost:8090/users/me/{userId}/pets/{petId}/medicines/{medicineId}
+- PUT localhost:8090/users/me/{userId}/pets/{petId}/medicines/{medicineId}
+- (Remove all medicines by pet id) DELETE localhost:8090/users/me/{userId}/pets/{petId}/medicines
+- (Remove medicine by its ID) DELETE localhost:8090/users/me/{userId}/pets/{petId}/medicines/{medicineId}
 
 ###nutrients
-- POST pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/nutrients
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/nutrients
-- GET pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/nutrients/{nutritionId}
-- PUT pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/nutrients/{nutritionId}
-- (Remove all nutrients by pet id) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/nutrients
-- (Remove nutrition by its ID) DELETE pawganiser.sdacademy.xyz:8090/api/users/{userId}/pets/{petId}/nutrients/{nutritionId}
+- POST localhost:8090/users/me/{userId}/pets/{petId}/nutrients
+- GET localhost:8090/users/me/{userId}/pets/{petId}/nutrients
+- GET localhost:8090/users/me/{userId}/pets/{petId}/nutrients/{nutritionId}
+- PUT localhost:8090/users/me/{userId}/pets/{petId}/nutrients/{nutritionId}
+- (Remove all nutrients by pet id) DELETE localhost:8090/users/me/{userId}/pets/{petId}/nutrients
+- (Remove nutrition by its ID) DELETE localhost:8090/users/me/{userId}/pets/{petId}/nutrients/{nutritionId}
 
 
