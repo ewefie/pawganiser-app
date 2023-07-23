@@ -31,7 +31,7 @@
         <io.springfox.swagger2.version>2.9.2</io.springfox.swagger2.version>
         <com.github.javafaker.version>1.0.2</com.github.javafaker.version>
         <org.thymeleaf.version>3.0.11.RELEASE</org.thymeleaf.version>
-        <org.thymeleaf.spring5.version>3.0.11.RELEASE</org.thymeleaf.spring5.version>
+        <org.thymeleaf.spring5.version>3.0.13.RELEASE</org.thymeleaf.spring5.version>
         <org.asciidoctor.version>1.5.8</org.asciidoctor.version>
         <org.springframework.restdocs.asciidoctor.version>2.0.4.RELEASE
         </org.springframework.restdocs.asciidoctor.version>
